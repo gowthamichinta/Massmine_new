@@ -19,6 +19,12 @@ django-tables2 = "*"
 pyenchant = "*"
 textblob = "*"
 django = "==2.1.7"
+django-import-export = "*"
+pyreadstat = "*"
+dicttoxml = "*"
+xhtml2pdf = "*"
+geopy = "*"
+easy-date = "*"
 
 [requires]
 python_version = "3.8"
