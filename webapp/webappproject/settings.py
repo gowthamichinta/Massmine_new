@@ -130,7 +130,7 @@ LANGUAGE_CODE = 'en-us'
 
 TIME = 'UTC'
 
-TIME_ZONE = ''
+TIME_ZONE = 'UTC'
 
 USE_I18N = True
 
@@ -168,5 +168,5 @@ EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
 # Encryption Setup (installation will add encryption key below)
-FIELD_ENCRYPTION_KEY = 'YQmOTndl4s2elQkNLf8raAZLgBZsUnazvw6MfJdG29g='
+FIELD_ENCRYPTION_KEY = 'k9mUWXIe4P0vX_nbWFPunubgJMmYqp2IHbIYghO9Zyk='
 IMPORT_EXPORT_USE_TRANSACTIONS = True
