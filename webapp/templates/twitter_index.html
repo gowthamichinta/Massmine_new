@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block body_block %}
+
+<div class="container content">
+  <div class="jumbotron">
+    <h1>
+    {% if user.is_authenticated %}
+    Welcome {{ user.username }} </h1>
+     
+        <input type="radio" id="PrevAnal" name="Analysis" value="PrevAnal">
+        <label for="Previous Anaalysis">PrevAnal</label><br>
+
+        <input type="radio" id="male" name="gender" value="male">
+        <label for="male">Male</label><br>
+    {% else %}
+        <p>You are not logged in</p>
+        <a href="{% url 'login' %}">login</a>
+    {% endif %}
+  </div>
+</div>
+
+{% endblock %}

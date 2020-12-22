@@ -1,0 +1,15 @@
+(tcp6 html-parser
+      srfi-13
+      utf8-srfi-13
+      srfi-1
+      http-client
+      medea
+      rest-bind
+      uri-common
+      utf8
+      pathname-expand
+      srfi-19
+      oauth-client
+      clucker
+      args
+      openssl)
