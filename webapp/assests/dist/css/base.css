@@ -131,7 +131,7 @@ body {
   }
   
   .main-div-width {
-    width: calc(100% - 70px);
+    width: calc(100% - 95px);
   }
   .tooltip {
     pointer-events:none;

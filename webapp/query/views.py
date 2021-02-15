@@ -144,6 +144,9 @@ def validate_massmine_tumblr(request):
 	return(child4.exitstatus)
 	#return(0)
 
+def platforms(request): 
+			return render(request,'query/platform.html')
+			
 @login_required
 def make_query(request):
 
@@ -301,4 +304,5 @@ def make_query(request):
 				print(e)
 			
 		return render(request, 'query/query_complete.html', {})
+
 #lang=language#lang=language

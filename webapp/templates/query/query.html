@@ -3,7 +3,155 @@
 {# <!DOCTYPE html> #}
 {# <html> #}
 {# <body> #}
-    <script>
+    <style>
+        
+        body {
+            font-family: Lato;
+            padding-top: 50px;
+        }
+        i.fab.fa-twitter {
+            display: inline-block;
+            border-radius: 60px;
+            box-shadow: 0px 0px 2px #1DA1F2;
+            padding: 0.5em 0.6em;
+        }
+        .bg-twitter {
+            background-color: #40A2F2;
+            font-size: 1.25rem;
+            padding-bottom: 50px;
+        }
+        .table-tabs td,
+        .table-tabs th {
+            border-top: 0;
+            border-bottom: 2px solid LightGray;
+        }
+        .table-tabs tr {
+            font-size: 1rem;
+            font-weight: 400;
+            cursor: pointer;
+            border: 1px solid #E0E0E0;
+        }
+        .table-tabs tr td.active {
+            border-bottom: 3px solid #1DA1F2;
+        }
+    </style>
+    
+<div class="bg-white mb-3">
+    <i class="fab fa-twitter bg-twitter text-white"></i>
+    <span class="lead text-muted pl-3" id="query_name" style="font-size: 1.1rem; font-weight: 500;">Twitter</span>
+</div>    
+<div class="row col-12">
+    <div class="col-6">
+        <div class="row mt-3">
+            <div class="table-responsive col-12">
+                <table class="table table-tabs mb-0">
+                    <tr class="text-center lead">
+                        <td id="tab-1" class="py-3 active">Search By</td>
+                        <td id="tab-2" class="py-3">Random Sample</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        <div class="card bg-light" style="border-top: none;">
+            <form method="POST" action="{% url 'query:make_query' %}">
+                {% csrf_token %}
+                <div class="row mt-4"> <!-- (1) -->
+                    <div class="col-2 offset-1">
+                        <label for="keyword" class="pt-2"> Keyword</label>
+                    </div>
+                    <div class="col-7">
+                        <input type="text" size="40" class="form-control" name="keyword" placeholder="Ex. Computer Science">
+                    </div>
+                </div>
+                <div class="row mt-3"> <!-- (1.a) -->
+                    <div class="offset-3 col-7">
+                        <div class="row">
+                            <div class="col-3 pr-0">
+                                <select class="custom-select" name="mydropdown1">
+                                    <option value="AND"> AND </option>
+                                    <option value="OR"> OR </option>
+                                </select>
+                            </div>
+                            <div class="col-9">
+                                <input type="text" size="35" class="form-control" name="keyword2" placeholder="Ex. Computer Science">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3"> <!-- (1.b) -->
+                    <div class="col-2 offset-1 text-right pt-2 pr-0">
+                        <span> <span class="align-middle mr-1" style="font-size: 12px!important;">Add</span> <input class="align-middle" onclick="addRow(); return false;" type="image" src="https://www.flaticon.com/svg/static/icons/svg/25/25340.svg" alt="plus sign here" width="18.33" height="18.33" /></span>
+                    </div>
+                    <div class="col-7">
+                        <div class="row">
+                            <div class="col-3 pr-0">
+                                <select class="custom-select" name="mydropdown2">
+                                    <option value="OR"> OR </option>
+                                    <option value="AND"> AND </option>
+                                </select>
+                            </div>
+                            <div class="col-9">
+                                <input type="text" size="35" class="form-control" name="keyword3" placeholder="Ex. Computer Science">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mt-3"> <!-- (2) -->
+                    <div class="col-2 offset-1">
+                        <label for="count" class="pt-2">Count</label>
+                    </div>
+                    <div class="col-7">
+                        <input type="text" size="40" class="form-control" name="count" placeholder="Ex. Computer Science">
+                    </div>
+                </div>
+
+                <div class="row mt-3"> <!-- (3) -->
+                    <div class="col-2 offset-1">
+                        <label for="from" class="pt-2">From</label>
+                    </div>
+                    <div class="col-3 pr-0">
+                        <input type="date" size="40" class="form-control" id="Date&Time" name="From">
+                    </div>
+                    <div class="col-1">
+                        <label for="To" class="text-center align-middle pt-2">to</label>
+                    </div>
+                    <div class="col-3 pl-0">
+                        <input type="date" size="40" class="form-control" id="Date&Time" name="To">
+                    </div>
+                </div>
+
+                <div class="row mt-3"> <!-- (4) -->
+                    <div class="col-2 offset-1">
+                        <label for="location" class="pt-2">Location</label>
+                    </div>
+                    <div class="col-7">
+                        <input type="text" size="40" class="form-control" name="location" placeholder="Ex. Computer Science">
+                    </div>
+                </div>
+
+                <div class="row mt-3"> <!-- (5) -->
+                    <div class="col-7 offset-3">
+                        <span class="text-muted" style="text-decoration: underline;">Advanced Options</span>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center mt-5 mb-4">
+                    <button type="submit" class="btn btn-success btn-sm py-2 px-5" style="border-radius: 0; font-weight: bold; letter-spacing: 2px;">COLLECT DATA</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-6"></div>
+</div>
+<!-- <div class="container content">
+  <div class="jumbotron">
+    <h4 style="font-family:Montserrat;">Search By</h4>
+
+        
+	</div>
+</div> -->
+<script>
     var customElementId = 1;
     var arrHead = new Array(); // array for header.
     arrHead = ['','DropDown', 'Input Attribute'];
@@ -86,58 +234,7 @@ span.appendChild(image);
         return false;
     }
 
-    </script>
-<div class="container content">
-  <div class="jumbotron">
-    <h3>Enter a Search Term</h3>
-        <form method="POST" action="{% url 'query:make_query' %}">
-            {% csrf_token %}
-            <label for="keyword">Keyword:</label>
-            <input type="text" name="keyword" placeholder="Ex. Computer Science">
-                   <p></p>
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <select  name="mydropdown1">
-                <option value="AND"> AND </option>
-                <option value="OR"> OR </option>
-            </select>
-            <!-- <label for="keyword1">Keyword1</label> -->
-
-            <input type="text" name="keyword2" placeholder="Ex. Computer Science">
-                   <p></p>
-            <span> Add <input onclick="addRow(); return false;" type="image" src="https://www.flaticon.com/svg/static/icons/svg/25/25340.svg" alt="plus sign here" width="18.33" height="18.33" /></span>
-            &nbsp;&nbsp;&nbsp;&nbsp;
-            <select name="mydropdown2">
-                <option value="OR"> OR </option>
-                <option value="AND"> AND </option>
-            </select>
-            <!-- <label for="keyword1">Keyword1</label> -->
-            <input type="text" name="keyword3" placeholder="Ex. Computer Science">
-                   <p></p>
-            <table id="empTable">
-                <div id="cont"></div>
-            </table>
-              <!-- the container to add the TABLE -->
-            <p></p>
-            <label for="count">Count:</label>
-            <input type="text" name="count" placeholder="Ex. 500">
-            <p></p>
-            <label for="From">From:</label>
-            <!--<label type="date" name="From" placeholder="Date&time"></label> -->
-            <!-- <input type="date" id="From" name = "From" value="Date&Time" min="2018-01-01" max="2030-12-31"> -->
-            <input type="date" id="Date&Time" name="From"> &nbsp;&nbsp;&nbsp;&nbsp;
-            <label for="To">To:</label>
-            <input type="date" id="Date&Time" name="To">
-            <!--<p></p>-->
-           <!-- <label for="To">To:</label>-->
-            <!-- <input type="datetime-local" id="To" name="To">-->
-            <p></p>
-            <label for="Location">Location:</label>
-            <input type="text" name="location" placeholder="Enter Location(Ex:City)">
-            <p></p>
-            <input type="submit" value="Submit Query">
-        </form>
-	</div>
-</div>
+</script>
 {# </body> #}
 {# </html> #}
 {% endblock %}

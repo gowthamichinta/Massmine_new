@@ -3,7 +3,7 @@
 <br>
 <div class="container content">
   <div>
-    <center><h1>Analysis Creation</h1></center>
+    <center><h1 style="font-family:verdana;">Twitter Analysis</h1></center>
     {% if user.is_authenticated %} 
 	    <form method="post" action="{% url 'analysis:view_tweets' %}" target="_self">
 		    {% csrf_token %}			

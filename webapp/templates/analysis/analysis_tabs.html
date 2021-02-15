@@ -40,7 +40,7 @@
     {% endblock %}
     {% block body_block %}
     <nav class="navbar navbar-light bg-white mt-3">
-        <div class="bg-white"><i class="fab fa-twitter bg-twitter text-white"></i><span class="lead text-muted pl-3" id="query_name">Untitled</span></div>
+        <div class="bg-white"><i class="fab fa-twitter bg-twitter text-white"></i><span class="lead text-muted pl-3" id="query_name">Twitter</span></div>
         <form method="post" action="{% url 'analysis:view_tweets' %}" target="_self" class="form-inline ml-auto my-2 my-lg-0"> {# This is not done yet. Need to change action URL. Just kept dummy now #}
             {% csrf_token %}
             <button class="btn btn-dark my-2 px-4 py-2 my-sm-0" style="border-radius: 0px; font-family: lato;" type="submit">Edit Query</button>

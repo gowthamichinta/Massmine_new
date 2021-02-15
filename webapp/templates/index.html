@@ -1,44 +1,91 @@
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 <head>
 <!-- Some CSS goes here -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+    <!-- CSS only -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+<style>
+	.fw-300 {
+		font-weight: 300!important;
+	}
+</style>
 </head>
 <body>
-	<nav class="navbar navbar-default navbar-static-top">
+	<!-- <nav class="navbar navbar-default navbar-static-top">
 		<div class="container">
 			<ul class="nav navbar-nav">
 					<img src="http://www.massmine.org/images/massmine-logo-horizontal.png" alt="Massmine-logo" width="100" height="40">
 			</ul>
 		</div>
+	</nav> -->
+	<nav class="navbar navbar-expand-lg navbar-light bg-light mx-3">
+		<a class="navbar-brand" href="#">	<img src="http://www.massmine.org/images/massmine-logo-horizontal.png" alt="Massmine-logo" width="100" height="40"></a>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+			
+				<li class="nav-item">
+					<a class="nav-link" href="#">Blog</a>
+				</li>
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						About
+					</a>
+					<div class="dropdown-menu" aria-labelledby="navbarDropdown">
+						<a class="dropdown-item" href="#">Action</a>
+						<a class="dropdown-item" href="#">Another action</a>
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#">Something else here</a>
+					</div>
+				</li>
+			</ul>
+			
+		</div>
+		<div class="form-inline my-2 my-lg-0 float-right">
+			<a  href="#" style="text-decoration: none;color:#0000008C">Login/SignUp</a>
+		</div>
 	</nav>
+	<div class="container" style="margin-bottom: 20px; margin-top:20px">
+	<center>
+		<h2 class="fw-300">MassMine: Empowering Researchers</h2>
+			<div class="my-3">
+				<a href="">
+					<img src="http://www.pngall.com/wp-content/uploads/2016/07/Twitter-Download-PNG.png" alt="Twitter" width="36" height="36">
+				</a>
+				<a href="">
+					<img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" width="36" height="36">
+				</a>
+				<a href="">
+					<img src="https://www.lifewire.com/thmb/xMEAMgCOFVVebQvWnooYhAgVdoQ=/2000x2000/smart/filters:no_upscale()/instagram-logo-57ea81e43df78c690f90439b.png" alt="Instagram" width="36" height="36">
+				</a>
+				<a href="">
+					<img src="{% static 'dist/img/icons/tumblr-icon.svg' %}" class="rounded" alt="Tumblr" width="36" height="36">
+				</a>
+				<a href="">
+					<img src="https://cdn3.iconfinder.com/data/icons/capsocial-round/500/youtube-512.png" alt="YouTube" width="36" height="36">
+				</a>
+			</div>
+			<h4 class="fw-300 mb-4">Designed to simplify the collection and use of data from online<br> sources such as social media networks for researchers</h4>
+	 </center>
+	 <div class="container">
+		<div class="row">
+			<div class="col-sm-6" style="text-align: center">
+				<h4>New to social media data collection?</h4>
+				<img src="{% static 'dist/img/Image_1.png' %}" alt="Massmine-logo" width="500" height="500" class="image-fluid">
+				<a href="{% url 'accounts:user_login' %}" class="btn btn-outline-dark mt-2" style="border-radius: 20px">Try our Massmine web tool</a>
+			</div>
+			<div class="col-sm-6" style="text-align: center">
+				<h4>Know how to code?</h4>
+				<img src="{% static 'dist/img/Image_2.png' %}" alt="Massmine-logo" width="500" height="500" class="image-fluid">
+				<a class="btn btn-outline-dark mt-2" style="border-radius: 20px">Install Command Line Software</a>
+			</div>
+		</div>
+	</div>
+	<div style="text-align: center"><a href="">Learn more about this Project</a></div>
+</div>
 </body>
 
-  	 <center>
-    	<h2><b>Welcome</b></h2>
-    	<h2>MassMine: Empowering Researchers</h2>
-    	<h4>Designed to simplify the collection and use of data from online<br> sources such as social media networks for researchers</h4><br><br>
-
-					<div class="container">
-     <div class="jumbotron">
-       <h2>Start a search</h2>
-       <h3>Select your data source:</h3>
-       <a href="{% url 'accounts:user_login' %}">
-       	<img src="http://www.pngall.com/wp-content/uploads/2016/07/Twitter-Download-PNG.png" alt="Twitter" width="36" height="36">
-       </a>
-       <a href="">
-       	<img src="https://www.lifewire.com/thmb/xMEAMgCOFVVebQvWnooYhAgVdoQ=/2000x2000/smart/filters:no_upscale()/instagram-logo-57ea81e43df78c690f90439b.png" alt="Instagram" width="36" height="36">
-       </a>
-       <a href="">
-       	<img src="http://www.logosvectorfree.com/wp-content/uploads/2017/12/Tumblr-Logo-Vector-png.png" alt="Tumblr" width="36" height="36">
-       </a>
-       <a href="">
-       	<img src="https://cdn3.iconfinder.com/data/icons/capsocial-round/500/youtube-512.png" alt="YouTube" width="36" height="36">
-       </a>
-       <a href="">
-       	<img src="https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg" alt="Facebook" width="36" height="36">
-       </a>
-     </div>
-   		</div>
-   	</center>
+  
 </html>

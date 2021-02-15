@@ -1,22 +1,137 @@
 {% extends 'base.html' %}
 {% block body_block %}
-
+<br>
 <div class="container content">
-  <div class="jumbotron">
-    <h1>
-    {% if user.is_authenticated %}
-    Welcome {{ user.username }} </h1>
-     
-        <input type="radio" id="PrevAnal" name="Analysis" value="PrevAnal">
-        <label for="Previous Anaalysis">PrevAnal</label><br>
+  <div>
+<link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+    crossorigin="anonymous"
+  />
+  <link
+    rel="stylesheet"
+    href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css"
+    integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN"
+    crossorigin="anonymous"
+  />
+  <link rel="stylesheet" href="./style.css" />
 
-        <input type="radio" id="male" name="gender" value="male">
-        <label for="male">Male</label><br>
+  <body>
+    <div >
+      <div >
+        <div class="row">
+          <div class="col-4">
+            <span><h4>Your Collections</h4></span>
+          </div>
+          <div class="col-4">
+            <!-- <form class="form-inline float-right">
+          <input
+            class="form-control mr-sm-2"
+            type="search"
+            placeholder="Search"
+            aria-label="Search"
+          />
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
+            Search
+          </button>
+        </form> -->
+            <div class="form-group has-search">
+              <input type="text" class="form-control" placeholder="Search" />
+            </div>
+          </div>
+          <div class="col-4">
+            <div class="dropdown float-right">
+              <button
+                class="btn dropdown-toggle"
+                type="button"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                style = "border:1px solid #ced4da"
+              >
+                Filter By name
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" href="#">Name</a>
+                <a class="dropdown-item" href="#">Date</a>
+              
+              </div>
+            </div>
+          </div>
+        </div>
+        <hr />
+        <br />
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-200" style="min-height: 200px;background-color: #F7F7F7;">
+              <div class="card-body d-flex flex-column align-items-start">
+                <h3 class="mb-0">
+                  <p><a class="text-secondary" href="{% url 'query:platforms'%}"> + New Collection </a>
+                </h3>
+              </div>
+              
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-200" style="min-height: 200px; background-color: #F7F7F7;">
+              <div class="card-body d-flex flex-column align-items-start">
+                <h3 class="mb-0">
+                  <a class="text-secondary" href="{% url 'analysis:analysis'%}"> View Twitter Collections</a>
+                </h3>
+              </div>
+              
+            </div>
+          </div>
+        </div>
+        <div class="row mb-2">
+          <div class="col-md-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-200" style="min-height: 200px; background-color: #F7F7F7;">
+              <div class="card-body d-flex flex-column align-items-start">
+                <h3 class="mb-0">
+                  <a class="text-secondary" href="#">View Wikipedia Collections</a>
+                </h3>
+              </div>
+
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="card flex-md-row mb-4 box-shadow h-md-200" style="min-height: 200px; background-color: #F7F7F7;">
+              <div class="card-body d-flex flex-column align-items-start">
+                <h3 class="mb-0">
+                  <a class="text-secondary" href="#">View Tumbler Collections</a>
+                </h3>
+              </div>
+             
+            </div>
+          </div>
+        </div>
+      
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+      integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+      integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+      crossorigin="anonymous"
+    ></script>
+    <script
+      src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.bundle.min.js"
+      integrity="sha384-LtrjvnR4Twt/qOuYxE721u19sVFLVSA4hf/rRt6PrZTmiPltdZcI7q7PXQBYTKyf"
+      crossorigin="anonymous"
+    ></script>
+
+    {% if user.is_authenticated %}
     {% else %}
         <p>You are not logged in</p>
         <a href="{% url 'login' %}">login</a>
     {% endif %}
-  </div>
+  </>
 </div>
 
 {% endblock %}
