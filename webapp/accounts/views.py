@@ -26,6 +26,9 @@ def account_inactive_error(request):
 def password_change_error(request):
     return render(request,'password_change_error.html')
 
+def platform(request):
+    return render(request,'accounts/platform.html')
+
 @login_required
 def user_logout(request):
     logout(request)

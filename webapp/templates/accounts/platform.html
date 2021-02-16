@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block body_block %}
+{# <!DOCTYPE html> #}
+{# <html> #}
+  <style>
+    body {
+        background: white 
+        }
+        
+    section {
+        background: white;
+        border-radius: 1em;
+        padding: 1em;
+        font-family: Montserrat;
+        font-size: 18px;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        margin-right: -50%;
+        transform: translate(-50%, -50%) }
+  </style>
+  <section>
+    <h2 class="h5">Select Platform</h2>
+        <div class="my-3">
+            <a href="">
+                <img src="https://cdn3.iconfinder.com/data/icons/logos-brands-3/24/logo_brand_brands_logos_google-256.png" alt="Google Trends" width="36" height="36">
+            </a>
+            <label class="ml-2">Google Trends</label>
+          </div>
+          <div class="my-3">
+            <a href="{% url 'accounts:register' %}">
+                <img src="http://www.pngall.com/wp-content/uploads/2016/07/Twitter-Download-PNG.png" alt="Twitter" width="36" height="36">
+            </a>
+            <label class="ml-2">Twitter </label>
+
+          </div>
+          <div class="my-3">
+            <a href="">
+                <img src="https://cdn3.iconfinder.com/data/icons/social-media-2169/24/social_media_social_media_logo_tumblr-512.png" alt="Tumblr" width="36" height="36">
+            </a>
+            <label class="ml-2">Tumbler</label>
+
+          </div>
+          <div class="my-3">
+            <a href="">
+                <img src="https://cdn1.iconfinder.com/data/icons/social-media-vol-3/24/_wikipedia-512.png" alt="Wikipedia" width="36" height="36">
+            </a>
+            <label class="ml-2">Wikipedia</label>
+
+          </div>
+          
+   </section>
+ {# </html> #}
+ {% endblock %}
