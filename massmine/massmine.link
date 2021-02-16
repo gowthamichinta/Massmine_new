@@ -1,5 +1,4 @@
 (tcp6 html-parser
-      srfi-13
       utf8-srfi-13
       srfi-1
       http-client
@@ -9,6 +8,7 @@
       utf8
       pathname-expand
       srfi-19
+      srfi-13
       oauth-client
       clucker
       args
