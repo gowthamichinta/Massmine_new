@@ -32,24 +32,30 @@
 
             {# Some stuff you only see when logged in #}
             {% if user.is_authenticated %}
+
             <li class="nav-item" data-toggle="tooltip" data-container="body" data-placement="left" title="MassMine">
-              <a class="nav-link text-white" href="{% url 'twitter_index' %}" ><span class="material-icons md-30">home</span></a>
+              <a class="nav-link text-white" href="{% url 'accounts:twitter_index' %}" ><span class="material-icons md-30">home</span></a>
             </li>
-            <li class="nav-item" data-toggle="tooltip" data-placement="left" title="Collections">
-              <a class="nav-link text-white" href="{% url 'analysis:analysis'%}"><span class="material-icons md-30">dashboard</span></a>
-            </li>
+            <!-- <li class="nav-item" data-toggle="tooltip" data-placement="left" title="Collections">
+              <a class="nav-link text-white" href="{% url 'query:platforms'%}"><span class="material-icons md-30">dashboard</span></a>
+            </li> -->
             <li class="nav-item" data-toggle="tooltip" data-placement="left" title="Query">
-              <a class="nav-link text-white" href="{% url 'query:request_page'%}"><span class="material-icons md-30">code</span></a>
+              <a class="nav-link text-white" href="{% url 'query:platforms'%}"><span class="material-icons md-30">code</span></a>
             </li>
             <li class="nav-item" data-toggle="tooltip" data-placement="left" title="Analysis">
-              <a class="nav-link text-white" href="{% url 'query:request_page'%}"><span class="material-icons md-30">insert_chart</span></a>
+              <a class="nav-link text-white" href="{% url 'accounts:twitter_index'%}"><span class="material-icons md-30">insert_chart</span></a>
             </li>
+          
+            <!-- <li class="nav-item" data-toggle="tooltip" data-placement="left" title="Collections">
+              <a class="nav-link text-white" href="{% url 'analysis:analysis'%}"><span class="material-icons md-30">dashboard</span></a>
+            </li> -->
+            
             <!-- <li class="nav-item" data-toggle="tooltip" data-placement="left" title="Analysis">
               <a class="nav-link text-white" href="#"><span class="material-icons md-30">build</span></a>
             </li> -->
-            <li class="nav-item mt-auto" data-toggle="tooltip" data-placement="left" title="Admin">
+            <!-- <li class="nav-item mt-auto" data-toggle="tooltip" data-placement="left" title="Admin">
               <a class="nav-link text-white" href="{% url 'admin:index' %}"><span class="material-icons md-30">account_circle</span></a>
-            </li>
+            </li> -->
             <li class="nav-item" data-toggle="tooltip" data-placement="left" title="Edit Profile">
               <a class="nav-link text-white" href="{% url 'accounts:edit_user_profile' %}"><span class="material-icons md-30">person_add</span></a>
             </li>
