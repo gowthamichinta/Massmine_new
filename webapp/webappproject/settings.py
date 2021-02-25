@@ -168,5 +168,5 @@ EMAIL_BACKEND = "django.core.mail.backends.filebased.EmailBackend"
 EMAIL_FILE_PATH = os.path.join(BASE_DIR, "sent_emails")
 
 # Encryption Setup (installation will add encryption key below)
-FIELD_ENCRYPTION_KEY = 'YQmOTndl4s2elQkNLf8raAZLgBZsUnazvw6MfJdG29g='
+FIELD_ENCRYPTION_KEY = '85S_FGLap4qbZMOmeSAff4t_iRDUuvckiwVwiIxN6IY='
 IMPORT_EXPORT_USE_TRANSACTIONS = True
