@@ -37,7 +37,8 @@ def validate_massmine(request):
 	access_token = my_profile.access_token
 	access_token_secret = my_profile.access_token_secret
 
-	child = pexpect.spawn('massmine --task=twitter-auth')
+	child = pexpect.spawn('/usr/local/bin/massmine/./massmine --task=twitter-auth')
+	#child4 = pexpect.spawn('/usr/local/bin/massmine/./massmine --help')
 	child.expect('[No]')
 	child.sendline('yes')
 	child.expect('Consumer key:')
@@ -128,7 +129,8 @@ def validate_massmine_tumblr(request):
 	access_token = my_profile_tumblr.access_token
 	access_token_secret = my_profile_tumblr.access_token_secret
 
-	child4 = pexpect.spawn('/usr/bin/massmine/./massmine --task=tumblr-auth')
+	child4 = pexpect.spawn('/usr/local/bin/massmine/./massmine --task=tumblr-auth')
+	#child4 = pexpect.spawn('/usr/Documents/django/Massmine_new/massmine/./massmine --task=tumblr-auth')
 	child4.expect('[No]')
 	child4.sendline('yes')
 	child4.expect('Consumer key:')
@@ -179,8 +181,8 @@ def make_query(request):
 		#### 11/17/2020 ####
 
 
-		command = 'massmine --task=twitter-stream --geo=' + str(p3) + ' --count=' + '"' + count + '"' + ' --query=' + '"' + keyword + '"' + '"' + mydropdown1 + '"' + keyword2 + '"' + mydropdown2 + '"' + keyword3 + '"' + str(from_1) + '"' + str(to_1)
-		#command = '/usr/bin/massmine/./massmine --task=twitter-stream --geo='  + str(p3) +' --count=' + '"' + count + '"' + ' --query=' + '"' + keyword + '"'
+		command = '/usr/local/bin/massmine/./massmine --task=twitter-stream --geo=' + str(p3) + ' --count=' + '"' + count + '"' + ' --query=' + '"' + keyword + '"' + '"' + mydropdown1 + '"' + keyword2 + '"' + mydropdown2 + '"' + keyword3 + '"' + str(from_1) + '"' + str(to_1)
+		#command = '/usr/local/bin/massmine/./massmine --task=twitter-stream --geo='  + str(p3) +' --count=' + '"' + count + '"' + ' --query=' + '"' + keyword + '"'
 		#command = '/usr/bin/massmine/./massmine --task=twitter-stream --geo=35.2272,-80.843083 --count=' + '"' + count + '"' + ' --query=' + '"' + keyword + '"'
 		#command = r"/usr/bin/massmine/./massmine --task=twitter-stream --query=facts --count=30 --dur='2019-10-11 14:30:00'"
 		#command = '/usr/bin/massmine/./massmine --task=twitter-stream --geo=-74,40,-73,41 --count=' + '"' + count + '"' + ' --query=' + '"' + keyword + '"'
@@ -199,7 +201,7 @@ def make_query(request):
 				print(customDDValue + ":   " + customInputValue)
 				command = command + '"' + customDDValue + '"' + customInputValue
 
-
+		#command = "/usr/local/bin/massmine/./massmine --task=twitter-stream --count=300 --geo=-74,40,-73,41"
 		stdout = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout
 
 		output = stdout.readlines()
@@ -211,6 +213,8 @@ def make_query(request):
 
 		for i in output:
 			string = i.decode("utf-8")
+			if(string == '\n'):
+				continue
 			data = json.loads(string)
 
 			try:
@@ -279,7 +283,7 @@ def make_query(request):
 						reply_sid = value
 					if (key == 'in_reply_to_user_id_str'):
 						reply_uid = value
-					if (key == 'in_reply_to_screen_name'):
+					if  	(key == 'in_reply_to_screen_name'):
 						reply_scrname = value
 
 				##print(txt)
