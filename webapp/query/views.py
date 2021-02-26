@@ -308,5 +308,6 @@ def make_query(request):
 				print(e)
 			
 		return render(request, 'query/query_complete.html', {})
+	print('sample data')
 
 #lang=language#lang=language
