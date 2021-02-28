@@ -9,6 +9,10 @@ from django.contrib.auth import update_session_auth_hash, authenticate, login, l
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db import transaction
+import sqlite3
+
+from accounts.models import Profile
+
 
 def index(request):
     return render(request,'index.html')
@@ -37,14 +41,32 @@ def user_logout(request):
 def register(request):
     if request.method =='POST':
         form = UserRegistrationForm(request.POST)
+        if ("username") in form.errors:
+            if form.errors["username"][0] == 'A user with that username already exists.':
+                userCheck, created = User.objects.get_or_create(username=form.instance.username, email=form.instance.email)
+
+                userProfile = Profile.objects.create(user_id = 31, consumer_key= form.cleaned_data.get('consumer_key'), consumer_secret= form.cleaned_data.get('consumer_secret'), access_token=form.cleaned_data.get('access_token'), access_token_secret= form.cleaned_data.get('access_token_secret'), social_platform= 'twitter')
+                #userProfile.user.add(userCheck)
+
         if form.is_valid():
             user = form.save()
+            #user = User.objects.create(password= form.cleaned_data.get("password1"), is_superuser= 0, username= form.cleaned_data.get('username'), first_name="test", email="sujeethkumar17@gmail.com", is_staff= 0, is_active= 1, date_joined= '2021-02-28 19:12:09.255948', last_name= 'Thummalapenta')
             user.refresh_from_db()
+            #userProfile = Profile.objects.create(user_id=user.id, consumer_key=form.cleaned_data.get('consumer_key'),
+             #                                    consumer_secret=form.cleaned_data.get('consumer_secret'),
+              #                                   access_token=form.cleaned_data.get('access_token'),
+               #                                  access_token_secret=form.cleaned_data.get('access_token_secret'),
+                #                                 social_platform='twitter')
+            #userProfile.user.add(user)
+
             user.profile.consumer_key = form.cleaned_data.get('consumer_key')
             user.profile.consumer_secret = form.cleaned_data.get('consumer_secret')
             user.profile.access_token = form.cleaned_data.get('access_token')
             user.profile.access_token_secret = form.cleaned_data.get('access_token_secret')
+            user.profile.social_platform = form.cleaned_data.get('social_platform')
+
             user.save()
+            user.profile.save()
             return render(request, 'twitter_index.html')
     else:
         form = UserRegistrationForm()

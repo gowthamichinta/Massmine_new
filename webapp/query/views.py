@@ -36,6 +36,7 @@ def validate_massmine(request):
 	consumer_secret = my_profile.consumer_secret
 	access_token = my_profile.access_token
 	access_token_secret = my_profile.access_token_secret
+	social_platform = my_profile.social_platform
 
 	child = pexpect.spawn('/usr/local/bin/massmine/./massmine --task=twitter-auth')
 	#child4 = pexpect.spawn('/usr/local/bin/massmine/./massmine --help')
@@ -49,6 +50,8 @@ def validate_massmine(request):
 	child.sendline(access_token)
 	child.expect('Access token secret')
 	child.sendline(access_token_secret)
+	child.expect('Social Platform')
+	child.sendline(social_platform)
 	#child.wait()
 	#exit status should be 0 on a success, 1 on a fail. signal status is if something else interrupted the command.
 	return(child.exitstatus)
@@ -128,6 +131,7 @@ def validate_massmine_tumblr(request):
 	consumer_secret = my_profile_tumblr.consumer_secret
 	access_token = my_profile_tumblr.access_token
 	access_token_secret = my_profile_tumblr.access_token_secret
+	social_platform = my_profile_tumblr.social_platform
 
 	child4 = pexpect.spawn('/usr/local/bin/massmine/./massmine --task=tumblr-auth')
 	#child4 = pexpect.spawn('/usr/Documents/django/Massmine_new/massmine/./massmine --task=tumblr-auth')
@@ -141,6 +145,8 @@ def validate_massmine_tumblr(request):
 	child4.sendline(access_token)
 	child4.expect('Access token secret')
 	child4.sendline(access_token_secret)
+	child4.expect('Social Platform')
+	child4.sendline(social_platform)
 	child4.wait()
 	#exit status should be 0 on a success, 1 on a fail. signal status is if something else interrupted the command.
 	return(child4.exitstatus)
