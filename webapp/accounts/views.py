@@ -1,5 +1,6 @@
 # accounts/views.py
-
+import django_tables2
+from dateutil.parser import parse
 from django.shortcuts import render, redirect
 from django.urls import reverse
 from accounts.forms import UserRegistrationForm, ProfileForm, EditUserForm
@@ -9,6 +10,9 @@ from django.contrib.auth import update_session_auth_hash, authenticate, login, l
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db import transaction
+
+from accounts.models import Profile
+
 
 def index(request):
     return render(request,'index.html')
@@ -37,6 +41,12 @@ def user_logout(request):
 def register(request):
     if request.method =='POST':
         form = UserRegistrationForm(request.POST)
+
+        if("username") in form.errors:
+                if form.errors["username"][0] == 'A user with that username already exists.':
+                    userDetails, created = User.objects.get_or_create(username = form.instance.username, email = form.instance.email)
+                    userProfile = Profile.objects.get(user_id = userDetails.id)
+
         if form.is_valid():
             user = form.save()
             user.refresh_from_db()
@@ -45,6 +55,7 @@ def register(request):
             user.profile.access_token = form.cleaned_data.get('access_token')
             user.profile.access_token_secret = form.cleaned_data.get('access_token_secret')
             user.save()
+            user.profile.save()
             return render(request, 'twitter_index.html')
     else:
         form = UserRegistrationForm()
