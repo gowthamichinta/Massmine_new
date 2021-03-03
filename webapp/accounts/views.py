@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db import transaction
 
-from accounts.models import Profile
+from accounts.models import Profile, SocialPlatformProfile
 
 
 def index(request):
@@ -46,7 +46,7 @@ def register(request):
                 if form.errors["username"][0] == 'A user with that username already exists.':
                     userDetails, created = User.objects.get_or_create(username = form.instance.username, email = form.instance.email)
                     userProfile = Profile.objects.get(user_id = userDetails.id)
-
+                    platform = SocialPlatformProfile.objects.create(profile_id = userProfile.id, consumer_key = form.cleaned_data.get('consumer_key'), consumer_secret = form.cleaned_data.get('consumer_secret'), access_token = form.cleaned_data.get('access_token'), access_token_secret = form.cleaned_data.get('access_token_secret'), social_platform = form.data.get('social_platform'))
         if form.is_valid():
             user = form.save()
             user.refresh_from_db()
@@ -56,11 +56,50 @@ def register(request):
             user.profile.access_token_secret = form.cleaned_data.get('access_token_secret')
             user.save()
             user.profile.save()
-            return render(request, 'twitter_index.html')
+            platform = SocialPlatformProfile.objects.create(profile_id=user.profile.id,
+                                                            consumer_key=form.cleaned_data.get('consumer_key'),
+                                                            consumer_secret=form.cleaned_data.get('consumer_secret'),
+                                                            access_token=form.cleaned_data.get('access_token'),
+                                                            access_token_secret=form.cleaned_data.get(
+                                                                'access_token_secret'),
+                                                            social_platform= form.data.get('social_platform'))
+            return render(request, 'accounts/registration_twitter.html')
     else:
         form = UserRegistrationForm()
-    return render(request, 'accounts/registration.html', 
-            {'form':form})
+    return render(request, 'accounts/registration_twitter.html',
+                  {'form':form})
+
+def register_tumblr(request):
+    if request.method =='POST':
+        form = UserRegistrationForm(request.POST)
+
+        if("username") in form.errors:
+                if form.errors["username"][0] == 'A user with that username already exists.':
+                    userDetails, created = User.objects.get_or_create(username = form.instance.username, email = form.instance.email)
+                    userProfile, profileCreated = Profile.objects.get_or_create(user_id = userDetails.id)
+                    platform = SocialPlatformProfile.objects.create(profile_id = userProfile.id, consumer_key = form.cleaned_data.get('consumer_key'), consumer_secret = form.cleaned_data.get('consumer_secret'), access_token = form.cleaned_data.get('access_token'), access_token_secret = form.cleaned_data.get('access_token_secret'), social_platform = form.data.get('social_platform'))
+        if form.is_valid():
+            user = form.save()
+            user.refresh_from_db()
+            user.profile.consumer_key = form.cleaned_data.get('consumer_key')
+            user.profile.consumer_secret = form.cleaned_data.get('consumer_secret')
+            user.profile.access_token = form.cleaned_data.get('access_token')
+            user.profile.access_token_secret = form.cleaned_data.get('access_token_secret')
+            user.save()
+            user.profile.save()
+            platform = SocialPlatformProfile.objects.create(profile_id=user.profile.id,
+                                                            consumer_key=form.cleaned_data.get('consumer_key'),
+                                                            consumer_secret=form.cleaned_data.get('consumer_secret'),
+                                                            access_token=form.cleaned_data.get('access_token'),
+                                                            access_token_secret=form.cleaned_data.get(
+                                                                'access_token_secret'),
+                                                            social_platform=form.data.get('social_platform'))
+            return render(request, 'accounts/registration_tumblr.html')
+    else:
+        form = UserRegistrationForm()
+    return render(request, 'accounts/registration_tumblr.html',
+                  {'form':form})
+
 
 @login_required
 @transaction.atomic

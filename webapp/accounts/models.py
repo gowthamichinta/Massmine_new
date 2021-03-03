@@ -7,6 +7,7 @@ from django.dispatch import receiver
 from encrypted_model_fields.fields import EncryptedCharField
 
 class SocialPlatformProfile(models.Model):
+    profile_id = models.IntegerField()
     consumer_key =  EncryptedCharField(max_length=50, blank=True)
     consumer_secret = EncryptedCharField(max_length=50, blank=True)
     access_token = EncryptedCharField(max_length=50, blank=True)
