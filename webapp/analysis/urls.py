@@ -7,9 +7,9 @@ from analysis import views
 app_name = 'analysis'
 
 urlpatterns=[
-    url(r'^analysis/$',views.analysis,name='analysis'),
+    url(r'^twitter/$',views.analysis_twitter,name='twitter'),
     url(r'^graphs/(?P<analysis_type>\w{0,20})/$',views.graphs,name='graphs'),
-    url(r'^view_tweets/$',views.view_tweets,name='view_tweets'),
+    url(r'^twitter/view_tweets/$',views.view_tweets,name='twitter/view_tweets'),
     url(r'^export_csv/', views.export_csv, name='export_csv'),
     url(r'^export_excel/', views.export_excel, name='export_excel'),
     url(r'^exports/', views.exports, name='exports'),

@@ -26,12 +26,16 @@ import easy_date
 def index(request):
 	 render(request, 'index.html')
 
-def request_page(request):
+def twitter(request):
 	return render(request, 'query/query.html', {})
 
-def validate_massmine(request):
+def tumblr(request):
+	return render(request, 'query/tumblr.html', {})
 
-	my_profile = instance=request.user.profile
+def validate_massmine(request):
+	#sadhana_testuser_59
+	#my_profile = request.user.profile
+	my_profile = Profile.objects.filter(user_id = request.user.id, social_platform=request.POST.get('txtPlatformType')).first()
 	consumer_key = my_profile.consumer_key
 	consumer_secret = my_profile.consumer_secret
 	access_token = my_profile.access_token
@@ -148,7 +152,12 @@ def validate_massmine_tumblr(request):
 
 def platforms(request): 
 			return render(request,'query/platform.html')
-			
+
+
+def platforms1(request):
+			return render(request,'query/platform.html')
+
+
 @login_required
 def make_query(request):
 

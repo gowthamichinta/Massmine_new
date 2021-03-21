@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+{% block body_block %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        $(document).ready(function(){
+
+            $("#btnSubmit").click(function(){
+                if(document.getElementById('tumblr-posts').checked){
+            $('#dvTumblrPosts').attr('style', 'display:block;');
+            $('#dvTumblrTag').attr('style', 'display:none;');
+
+        }else if(document.getElementById("tumblr-tag").checked){
+            $('#dvTumblrTag').attr('style', 'display:block;');
+            $('#dvTumblrPosts').attr('style', 'display:none;');
+        }
+        else{
+            document.getElementById("GFG").innerHTML = "Please select atleast one option"
+        }
+            });
+
+        });
+    </script>
+</head>
+<body>
+    <p><h3>Please select any one option: </h3></p>
+    <input type="radio" id="tumblr-posts" name="tumblr" value="tumblr-posts">
+    <label for="tumblr-posts">tumblr-posts</label><br>
+    <input type="radio" id="tumblr-tag" name="tumblr" value="tumblr-tag">
+    <label for="tumblr-tag">tumblr-tag</label><br>
+    <label id = "GFG">
+
+    </label>
+
+    <p><button id="btnSubmit">Submit</button></p>
+
+
+    <div id="dvTumblrPosts" class="container content" style="display:none">
+        <div class="jumbotron">
+            <h3>Enter a Search Term for tumblr-posts</h3>
+            <form method="POST" action="{}">
+                <p class="keyword">
+                <label for="Keyword">Keyword:</label>
+                <input type="text" name="keyword1">
+                <label>Please enter a keyword like "kingjamesprogramming"</label>
+                </p>
+                <p class = "count">
+                <label for="count">Count:</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" name="count">
+                <label> Please enter a count value like 10 or 20</label>
+                </p>
+                <p>
+                <input type="submit" value="Submit">
+                </p>
+            </form>
+        </div>
+    </div>
+    <div id="dvTumblrTag" class="container content" style="display:none">
+        <div class="jumbotron">
+            <h3>Enter a Search Term for tumblr-tag</h3>
+            <form method="POST" action="{}">
+                <p class="keyword">
+                <label for="Keyword">Keyword:</label>
+                <input type="text" name="keyword1">
+                <label>Please enter a keyword like "lol"</label>
+                </p>
+                <p class = "count">
+                <label for="count">Count:</label>&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="text" name="count" >
+                <label> Please enter a count value like 5 or 10</label>
+                </p>
+                <p>
+                <input type="submit" value="Submit">
+                </p>
+
+
+            </form>
+        </div>
+    </div>
+</body>
+</html>
+
+{% endblock %}
+
+

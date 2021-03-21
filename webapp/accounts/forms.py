@@ -11,10 +11,10 @@ class ProfileForm(forms.ModelForm):
         fields = ('consumer_key', 'consumer_secret', 'access_token', 'access_token_secret')
 
 class UserRegistrationForm(UserCreationForm):
-    consumer_key = forms.CharField(max_length = 50, required = True)
-    consumer_secret = forms.CharField(max_length = 50, required = True)
-    access_token = forms.CharField(max_length = 50, required = True)
-    access_token_secret = forms.CharField(max_length = 50, required = True)
+    #consumer_key = forms.CharField(max_length = 50, required = True)
+    #consumer_secret = forms.CharField(max_length = 50, required = True)
+    #access_token = forms.CharField(max_length = 50, required = True)
+    #access_token_secret = forms.CharField(max_length = 50, required = True)
     
     class Meta:
         model = User

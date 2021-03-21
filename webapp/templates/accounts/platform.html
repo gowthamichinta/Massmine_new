@@ -19,6 +19,12 @@
         margin-right: -50%;
         transform: translate(-50%, -50%) }
   </style>
+  <script>
+    function fnGetPlatformType(platformType)
+    {
+        sessionStorage.setItem('socialPlatformType',platformType)
+    }
+  </script>
   <section>
     <h2 class="h5">Select Platform</h2>
         <div class="my-3">
@@ -28,17 +34,17 @@
             <label class="ml-2">Google Trends</label>
           </div>
           <div class="my-3">
-            <a href="{% url 'accounts:register' %}">
+            <a href="{% url 'accounts:register_twitter' %}" onclick="fnGetPlatformType('twitter')">
                 <img src="http://www.pngall.com/wp-content/uploads/2016/07/Twitter-Download-PNG.png" alt="Twitter" width="36" height="36">
             </a>
             <label class="ml-2">Twitter </label>
 
           </div>
           <div class="my-3">
-            <a href="">
+            <a href="{% url 'accounts:register_tumblr' %}" onclick="fnGetPlatformType('tumblr')">
                 <img src="https://cdn3.iconfinder.com/data/icons/social-media-2169/24/social_media_social_media_logo_tumblr-512.png" alt="Tumblr" width="36" height="36">
             </a>
-            <label class="ml-2">Tumbler</label>
+            <label class="ml-2">Tumblr</label>
 
           </div>
           <div class="my-3">
