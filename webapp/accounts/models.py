@@ -18,21 +18,21 @@ class SocialPlatformProfile(models.Model):
         return 'SocialPlatformProfile: ' + self.social_platform
 
 class Profile(models.Model):
-    user = models.OneToOneField(User,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
     consumer_key =  EncryptedCharField(max_length=50, blank=True)
     consumer_secret = EncryptedCharField(max_length=50, blank=True)
     access_token = EncryptedCharField(max_length=50, blank=True)
     access_token_secret = EncryptedCharField(max_length=50, blank=True)
-    socialPlatorm = models.ManyToManyField(SocialPlatformProfile)
+    social_platform = models.TextField(max_length=50)
 
     def __str__(self):
         return 'Profile: ' + self.user.username
 
-@receiver(post_save, sender=User)
-def update_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-    instance.profile.save()
+#@receiver(post_save, sender=User)
+#def update_user_profile(sender, instance, created, **kwargs):
+ #   if created:
+  #      Profile.objects.create(user=instance)
+   # instance.profile.save()
 
 
 

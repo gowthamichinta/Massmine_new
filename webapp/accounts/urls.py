@@ -6,6 +6,7 @@ urlpatterns = [
     url(r'^user_login/$',views.user_login,name='user_login'),
     url(r'^user_logout/$', views.user_logout,name='user_logout'),
     url(r'^register/$', views.register, name='register'),
+    url(r'^register_twitter/$', views.register_twitter, name='register_twitter'),
     url(r'^register_tumblr/$', views.register_tumblr, name='register_tumblr'),
     url(r'^platform/$', views.platform, name='platform'),
     url(r'^twitter_index/$', views.twitter_index, name='twitter_index'),

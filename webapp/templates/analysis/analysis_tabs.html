@@ -41,7 +41,7 @@
     {% block body_block %}
     <nav class="navbar navbar-light bg-white mt-3">
         <div class="bg-white"><i class="fab fa-twitter bg-twitter text-white"></i><span class="lead text-muted pl-3" id="query_name">Twitter</span></div>
-        <form method="post" action="{% url 'analysis:view_tweets' %}" target="_self" class="form-inline ml-auto my-2 my-lg-0"> {# This is not done yet. Need to change action URL. Just kept dummy now #}
+        <form method="post" action="{% url 'analysis:twitter/view_tweets' %}" target="_self" class="form-inline ml-auto my-2 my-lg-0"> {# This is not done yet. Need to change action URL. Just kept dummy now #}
             {% csrf_token %}
             <button class="btn btn-dark my-2 px-4 py-2 my-sm-0" style="border-radius: 0px; font-family: lato;" type="submit">Edit Query</button>
         </form>
@@ -50,7 +50,7 @@
         <div class="table-responsive col-12">
             <table class="table table-tabs">
                 <tr class="text-center lead">
-                    <td onclick="redirect_to('view_tweets')" id="tab-1" class="{{ request.session.tab_1_class|safe}}" >View Raw Data</td>
+                    <td onclick="redirect_to('twitter/view_tweets')" id="tab-1" class="{{ request.session.tab_1_class|safe}}" >View Raw Data</td>
                     <td onclick="redirect_to('graphs')" id="tab-2" class="{{ request.session.tab_2_class|safe}}" >Visualize Data</td>
                     <td onclick="redirect_to('exports')" id="tab-3" class="{{ request.session.tab_3_class|safe}}" >Export Data</td>
                 </tr>
@@ -63,8 +63,8 @@
     {% block custom_js_block %}
     <script>
         function redirect_to(tabname) {
-            if(tabname === 'view_tweets'){
-                window.location.href = "{% url 'analysis:view_tweets' %}";
+            if(tabname === 'twitter/view_tweets'){
+                window.location.href = "{% url 'analysis:twitter/view_tweets' %}";
             }
             else if(tabname === 'graphs'){
                 window.location.href = "{% url 'analysis:graphs' 'sentiment' %}";
@@ -73,7 +73,7 @@
                 window.location.href = "{% url 'analysis:exports' %}";
             }
             else {
-                window.location.href = "{% url 'analysis:view_tweets' %}";
+                window.location.href = "{% url 'analysis:twitter/view_tweets' %}";
             }
         }
     </script>

@@ -334,14 +334,15 @@ class DateAnalysis(TemplateView):
 		return context
 
 @login_required
-def analysis(request):
+def analysis_twitter(request):
 	context ={'studies_html':""}
 	context['studies_html']+=("<table class=\"table table-bordered\"><tr><th>Study ID</th><th>Number of Tweets</th><th>Time Stamp</th><th>User</th><th>Create Analysis</th></tr>")
 	user = request.user
 	for x in Study.objects.all():
 		if str(x.user) == str(user):
 			context['studies_html']+=("<tr><td>"+x.study_id[:-10]+"</td><td>"+str(x.count)+"</td><td>"+time.ctime(int(x.study_id[-10:]))+"</td><td>"+x.user+"</td><td><button class=\"btn btn-info btn-sm\" type=\"submit\" name=\"study_select\" value=\""+x.study_id+"\">Create Analysis</button></td></tr>")
-	context['studies_html']+=("</table>")
+	context['studies_' \
+			'html']+=("</table>")
 	return render(request, 'analysis/analysis.html', context)
 
 
@@ -391,7 +392,7 @@ def graphs(request, analysis_type):
 
 @login_required
 def view_tweets(request):
-	tab = 'view_tweets'
+	tab = 'twitter/view_tweets'
 	print('LOG: Reache here: analysis_detail(). Tab is ' + tab)
 	study_select = ''
 	try:
@@ -412,11 +413,11 @@ def view_tweets(request):
 	request.session['tab_3_class'] = ''
 	request.session['analysis_select'] = tab
 
-	if tab == "view_tweets":
+	if tab == "twitter/view_tweets":
 		request.session['tab_1_class'] = 'active'
 		return get_study(request)
 	else:
-		request.session['analysis_select'] = 'view_tweets'
+		request.session['analysis_select'] = 'twitter/view_tweets'
 		request.session['tab_1_class'] = 'active'
 		return get_study(request)
 

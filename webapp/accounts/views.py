@@ -42,59 +42,65 @@ def register(request):
     if request.method =='POST':
         form = UserRegistrationForm(request.POST)
 
+        #platformType = form.data.get('txtPlatformType')
+        #if (platformType == 'twitter'):
+        #    redirectURL = '/accounts/platform/'
+        #elif (platformType == 'tumblr'):
+        #    redirectURL = '/accounts/platform/'
+
         if("username") in form.errors:
                 if form.errors["username"][0] == 'A user with that username already exists.':
-                    userDetails, created = User.objects.get_or_create(username = form.instance.username, email = form.instance.email)
-                    userProfile = Profile.objects.get(user_id = userDetails.id)
-                    platform = SocialPlatformProfile.objects.create(profile_id = userProfile.id, consumer_key = form.cleaned_data.get('consumer_key'), consumer_secret = form.cleaned_data.get('consumer_secret'), access_token = form.cleaned_data.get('access_token'), access_token_secret = form.cleaned_data.get('access_token_secret'), social_platform = form.data.get('social_platform'))
+                    return redirect('/accounts/platform/')
         if form.is_valid():
             user = form.save()
-            user.refresh_from_db()
-            user.profile.consumer_key = form.cleaned_data.get('consumer_key')
-            user.profile.consumer_secret = form.cleaned_data.get('consumer_secret')
-            user.profile.access_token = form.cleaned_data.get('access_token')
-            user.profile.access_token_secret = form.cleaned_data.get('access_token_secret')
-            user.save()
-            user.profile.save()
-            platform = SocialPlatformProfile.objects.create(profile_id=user.profile.id,
-                                                            consumer_key=form.cleaned_data.get('consumer_key'),
-                                                            consumer_secret=form.cleaned_data.get('consumer_secret'),
-                                                            access_token=form.cleaned_data.get('access_token'),
-                                                            access_token_secret=form.cleaned_data.get(
-                                                                'access_token_secret'),
-                                                            social_platform= form.data.get('social_platform'))
-            return render(request, 'accounts/registration_twitter.html')
+            username = form.data.get('username')
+
+        return redirect('/accounts/platform/')
+    else:
+        form = UserRegistrationForm()
+
+    return render(request, 'accounts/registration_user.html',
+                  {'form':form})
+
+def register_twitter(request):
+    if request.method =='POST':
+        form = UserRegistrationForm(request.POST)
+
+        if True:
+            userDetails = User.objects.get(username=form.data.get('hdnUserNameTwitter'))
+            profileExists = Profile.objects.filter(user_id = userDetails.id, social_platform=form.data.get('txtPlatformType')).first()
+
+            if (profileExists == None):
+                 Profile.objects.create(user_id=userDetails.id,
+                                                 consumer_key=form.data.get('consumer_key'),
+                                                 consumer_secret=form.data.get('consumer_secret'),
+                                                 access_token=form.data.get('access_token'),
+                                                 access_token_secret=form.data.get('access_token_secret'),
+                                                 social_platform=form.data.get('social_platform'))
+            return redirect('/accounts/user_login/')
     else:
         form = UserRegistrationForm()
     return render(request, 'accounts/registration_twitter.html',
                   {'form':form})
 
+
 def register_tumblr(request):
     if request.method =='POST':
         form = UserRegistrationForm(request.POST)
 
-        if("username") in form.errors:
-                if form.errors["username"][0] == 'A user with that username already exists.':
-                    userDetails, created = User.objects.get_or_create(username = form.instance.username, email = form.instance.email)
-                    userProfile, profileCreated = Profile.objects.get_or_create(user_id = userDetails.id)
-                    platform = SocialPlatformProfile.objects.create(profile_id = userProfile.id, consumer_key = form.cleaned_data.get('consumer_key'), consumer_secret = form.cleaned_data.get('consumer_secret'), access_token = form.cleaned_data.get('access_token'), access_token_secret = form.cleaned_data.get('access_token_secret'), social_platform = form.data.get('social_platform'))
-        if form.is_valid():
-            user = form.save()
-            user.refresh_from_db()
-            user.profile.consumer_key = form.cleaned_data.get('consumer_key')
-            user.profile.consumer_secret = form.cleaned_data.get('consumer_secret')
-            user.profile.access_token = form.cleaned_data.get('access_token')
-            user.profile.access_token_secret = form.cleaned_data.get('access_token_secret')
-            user.save()
-            user.profile.save()
-            platform = SocialPlatformProfile.objects.create(profile_id=user.profile.id,
-                                                            consumer_key=form.cleaned_data.get('consumer_key'),
-                                                            consumer_secret=form.cleaned_data.get('consumer_secret'),
-                                                            access_token=form.cleaned_data.get('access_token'),
-                                                            access_token_secret=form.cleaned_data.get(
-                                                                'access_token_secret'),
-                                                            social_platform=form.data.get('social_platform'))
-            return render(request, 'accounts/registration_tumblr.html')
+        if True:
+            userDetails = User.objects.get(username=form.data.get('hdnUserNameTumblr'))
+            profileExists = Profile.objects.filter(user_id=userDetails.id,
+                                                social_platform=form.data.get('social_platform')).first()
+
+            if (profileExists == None):
+                Profile.objects.create(user_id=userDetails.id,
+                                       consumer_key=form.data.get('consumer_key'),
+                                       consumer_secret=form.data.get('consumer_secret'),
+                                       access_token=form.data.get('access_token'),
+                                       access_token_secret=form.data.get('access_token_secret'),
+                                       social_platform=form.data.get('social_platform'))
+            return redirect('/accounts/user_login/')
     else:
         form = UserRegistrationForm()
     return render(request, 'accounts/registration_tumblr.html',

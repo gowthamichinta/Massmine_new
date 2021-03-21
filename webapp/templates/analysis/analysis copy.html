@@ -5,7 +5,7 @@
   <div>
     <center><h1 style="font-family:verdana;">Twitter Analysis</h1></center>
     {% if user.is_authenticated %} 
-	    <form method="post" action="{% url 'analysis:view_tweets' %}" target="_self">
+	    <form method="post" action="{% url 'analysis:twitter/view_tweets' %}" target="_self">
 		    {% csrf_token %}			
 		    {{studies_html|safe}}		
 	      <input type="hidden" name="analysis_select" value="tweet_sent">
