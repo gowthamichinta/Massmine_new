@@ -30,10 +30,10 @@ from xml.dom.minidom import parseString
 # import xlwt
 # from analysis.resources import TweetResource
 from analysis import resources
-from analysis.resources import StudyTable
+from analysis.resources import StudyTable, StudyTable_Tumblr
 from analysis.utils import render_html_to_pdf
 
-from analysis.models import Study
+from analysis.models import Study, Tumblr_Study
 from query.models import Tweet
 from django.views.generic.base import TemplateView
 import plotly
@@ -223,6 +223,77 @@ class SentAnalysis(TemplateView):
 		return context
 
 @login_required
+class SentAnalysis_Tumblr(TemplateView):
+	template_name = 'graphH.html'
+
+	def __init__(self, name):
+		self.name = name
+
+	def get_context_data(self, **kwargs):
+		context = super().get_context_data(**kwargs)
+		global studyId
+		global graph_type
+		list = Study.objects.all()
+		offset = len(studyId)- 10
+		keyWord = studyId[:offset]
+		arr = []
+		twList = Tumblr_Study.objects.get(tumblr_study_id = studyId).posts.all()
+
+		pos = 0
+		neg = 0
+		neutral = 0
+		for y in twList:
+			tempText = y.text
+			arr.append(tempText)
+		for x in arr:
+			tb = TextBlob(x)
+			if tb.sentiment[0]<0:
+				neg += 1
+			elif tb.sentiment[0]==0:
+				neutral += 1
+			else:
+				pos +=1
+
+		analysis = [pos,neg,neutral]
+
+		titleG = 'Overall sentiment of: ' + keyWord
+		if graph_type == 'bar':
+			data = [
+				plotly.graph_objs.Bar(
+					x=['positive','negative','neutral'],
+					y=analysis,
+					opacity = 0.5
+				)
+			]
+		elif graph_type == 'scatter':
+			data = [
+				plotly.graph_objs.Scatter(
+					x=['positive','negative','neutral'],
+					y=analysis,
+					mode = 'markers'
+				)
+			]
+		elif graph_type == 'line':
+			data = [
+				plotly.graph_objs.Line(
+					x=['positive','negative','neutral'],
+					y=analysis,
+					opacity = 0.5
+				)
+			]
+		layout = plotly.graph_objs.Layout(
+			autosize=True,
+			title=titleG
+		)
+
+		plotly_fig = plotly.graph_objs.Figure(data=data, layout=layout)
+		plotly_fig.layout.template = 'simple_white'
+		div_fig = plotly.offline.plot(plotly_fig, auto_open=False, output_type='div')
+		context['graph'] = div_fig
+		return context
+
+
+@login_required
 def sent_analysis(request):
 	global studyId
 	global graph_type
@@ -233,6 +304,19 @@ def sent_analysis(request):
 	context = g.get_context_data()
 	context['studyId'] = studyId
 	return render(request, 'analysis/graph.html', context)
+
+@login_required
+def sent_analysis_tumblr(request):
+	global studyId
+	global graph_type
+	studyId = request.session['study_select']
+	graph_type = request.session.get('graph_type', None)
+	title = 'Sentiment Analysis'
+	g = SentAnalysis_Tumblr(request)
+	context = g.get_context_data()
+	context['studyId'] = studyId
+	return render(request, 'analysis/graph.html', context)
+
 
 @login_required
 def freq_word(request):
@@ -278,6 +362,21 @@ def get_study(request):
 
 	return render(request, 'analysis/get_study.html', locals())
 	# return render(request, 'analysis/get_study.html', context)
+
+def get_study_tumblr(request):
+	# studyid = request.POST['study_select']
+	print('LOG: Entered get_study()')
+	studyid = request.session['study_select']
+	print('LOG: studid = ' + studyid)
+	if len(studyid) == 0:
+		print('LOG: Redirecting to analysis/analysis')
+		return redirect('/analysis')
+	#testdata = Tumblr_Study.objects.get(tumblr_study_id=studyid).posts.all()
+	current_study = StudyTable_Tumblr(Tumblr_Study.objects.get(tumblr_study_id=studyid).posts.all())
+	RequestConfig(request, paginate=False).configure(current_study)
+
+	return render(request, 'analysis/get_study_tumblr.html', locals())
+
 
 @login_required
 class DateAnalysis(TemplateView):
@@ -345,11 +444,61 @@ def analysis_twitter(request):
 			'html']+=("</table>")
 	return render(request, 'analysis/analysis.html', context)
 
+def analysis_tumblr(request):
+	context ={'studies_html':""}
+	context['studies_html']+=("<table class=\"table table-bordered\"><tr><th>Tumblr Study ID</th><th>Number of Posts</th><th>Time Stamp</th><th>User</th><th>Create Tumblr Analysis</th></tr>")
+	user = request.user
+	for x in Tumblr_Study.objects.all():
+		if str(x.user) == str(user):
+			context['studies_html']+=("<tr><td>"+x.tumblr_study_id[:-10]+"</td><td>"+str(x.count)+"</td><td>"+time.ctime(int(x.tumblr_study_id[-10:]))+"</td><td>"+x.user+"</td><td><button class=\"btn btn-info btn-sm\" type=\"submit\" name=\"study_select\" value=\""+x.tumblr_study_id+"\">Create Analysis</button></td></tr>")
+	context['studies_' \
+			'html']+=("</table>")
+	return render(request, 'analysis/analysis_tumblr.html', context)
+
 
 def to_datetime(datestring):
 	time_tuple = parsedate_tz(datestring.strip())
 	dt = datetime(*time_tuple[:6])
 	return dt - timedelta(seconds=time_tuple[-1])
+
+
+@login_required
+def graphs_tumblr(request, analysis_type):
+	request.session['graph_type'] = request.POST.get('graph_type', None)
+	print('LOG: Reache here: graphs(). Type is ' + analysis_type)
+	study_select = ''
+	try:
+		study_select = request.session['study_select']
+	except:
+		print('LOG: No data in study_select of request.SESSION')
+		print('LOG: Redirecting to List of Analysis list Page')
+		return analysis(request)
+	print('LOG: Study ID: ' + study_select)
+
+	request.session['tab_1_class'] = ''
+	request.session['tab_2_class'] = 'active'
+	request.session['tab_3_class'] = ''
+
+	if request.session.get('graph_type', None) == None:
+		request.session['graph_type'] = 'bar'
+	print('LOG: ---- graph_type: ' + request.session.get('graph_type', None))
+
+	# Types of Graphs
+	### 'line'
+	### 'bar'
+	### 'scatter'
+
+	if analysis_type == "sentiment":
+		request.session['analysis_type'] = 'sentiment'
+		return sent_analysis_tumblr(request)
+	elif analysis_type == "freq_words":
+		request.session['analysis_type'] = 'freq_words'
+		return freq_word(request)
+	elif analysis_type == "date":
+		request.session['analysis_type'] = 'date'
+		return date_graph(request)
+	else:
+		return analysis(request)
 
 
 @login_required
@@ -420,6 +569,37 @@ def view_tweets(request):
 		request.session['analysis_select'] = 'twitter/view_tweets'
 		request.session['tab_1_class'] = 'active'
 		return get_study(request)
+
+@login_required
+def view_tumblr_posts(request):
+	tab = 'tumblr/view_tumblr_posts'
+	print('LOG: Reache here: analysis_detail(). Tab is ' + tab)
+	study_select = ''
+	try:
+		try:
+			study_select =  request.session['study_select'] = request.POST['study_select']
+		except:
+			print('LOG: No data in study_select of request.POST')
+			study_select = request.session['study_select']
+	except:
+		print('LOG: No data in study_select of request.SESSION')
+		print('LOG: Redirecting to List of Analysis list Page')
+		return analysis(request)
+
+	print('LOG: analysis_select: ' + tab)
+	print('LOG: Study ID: ' + study_select)
+	request.session['tab_1_class'] = ''
+	request.session['tab_2_class'] = ''
+	request.session['tab_3_class'] = ''
+	request.session['analysis_select'] = tab
+
+	if tab == "tumblr/view_tumblr_posts":
+		request.session['tab_1_class'] = 'active'
+		return get_study_tumblr(request)
+	else:
+		request.session['analysis_select'] = 'tumblr/view_tumblr_posts'
+		request.session['tab_1_class'] = 'active'
+		return get_study_tumblr(request)
 
 @login_required
 def exports(request):

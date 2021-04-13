@@ -40,3 +40,24 @@ class Tweet(models.Model):
 	utc_offset = models.CharField(max_length=100, default='utc_offset', null=True)
 	time_zone = models.DateTimeField(null=True)
 	geo_enabled = models.BooleanField(default=False)
+
+
+class Tumblr(models.Model):
+	#id = models.CharField(max_length=100, default='id', primary_key=True)  # string of Tumblr Post ID
+	tumblr_id_str = models.CharField(max_length=100, default='tumblr_id_str' , primary_key=True)  # string of Tumblr Post ID
+	tumblr_type_str = models.CharField(max_length=100, default='tumblr_type_str')
+	blogname_str = models.CharField(max_length=100, default='tumblr_blogname_str')
+	blog_name_str = models.CharField(max_length=100, default='tumblr_blog_name_str')
+	blog_title_str = models.CharField(max_length=100, default='tumblr_blog_title_str')
+	blog_description_str = models.CharField(max_length=100, default='tumblr_blog_description_str')
+	blog_url_str = models.CharField(max_length=100, default='tumblr_blog_url_str')
+	blog_uuid_str = models.CharField(max_length=100, default='tumblr_blog_uuid_str')
+	updated_at = models.IntegerField(default=0)
+	post_url_str = models.CharField(max_length=100, default='tumblr_post_url_str')
+	date = models.CharField(max_length=100, default='date')
+	timestamp = models.IntegerField(default=0)
+	state = models.CharField(max_length=100, default='state', null=False)
+	format = models.CharField(max_length=100, default='format', null=False)
+	comment = models.TextField(max_length=100, default='comment')
+	can_reblog = models.BooleanField(default=False)
+	can_reply = models.BooleanField(default=False)

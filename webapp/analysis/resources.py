@@ -2,7 +2,7 @@ from import_export import resources
 from import_export.fields import Field
 import django_tables2
 from dateutil.parser import parse
-from query.models import Tweet
+from query.models import Tweet, Tumblr
 
 
 def create_TweetResource(model_fields):
@@ -40,3 +40,25 @@ class StudyTable(django_tables2.Table):
 		template_name = 'django_tables2/bootstrap.html'
 		sequence = ("created_at", "screen_name", "text", "hashtags",)
 		# fields = ("created_at", "screen_name", "text", "hashtags")
+
+
+class StudyTable_Tumblr(django_tables2.Table):
+	#created_at = django_tables2.Column(verbose_name='Timestamp')
+	#screen_name = django_tables2.Column(verbose_name='Username')
+	#text = django_tables2.Column(verbose_name='Tweet')
+	#hashtags = django_tables2.Column(verbose_name='Hashtag')
+
+	#def render_created_at(self, value):
+	#	return parse(value).strftime('%m/%d/%Y')
+
+	#def render_screen_name(self, value):
+	#	return "@" + value
+
+	#def render_hashtags(self, value):
+	#	return "#" + value
+
+	class Meta:
+		attrs = {"id": "table_tweets"}
+		model = Tumblr
+		template_name = 'django_tables2/bootstrap.html'
+		#sequence = ("created_at", "screen_name", "text", "hashtags",)

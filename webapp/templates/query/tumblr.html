@@ -8,84 +8,223 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+<style>
+
+        body {
+            font-family: Lato;
+            padding-top: 50px;
+        }
+        i.fab.fa-twitter {
+            display: inline-block;
+            border-radius: 60px;
+            box-shadow: 0px 0px 2px #1DA1F2;
+            padding: 0.5em 0.6em;
+        }
+        .bg-twitter {
+            background-color: #40A2F2;
+            font-size: 1.25rem;
+            padding-bottom: 50px;
+        }
+        .table-tabs td,
+        .table-tabs th {
+            border-top: 0;
+            border-bottom: 2px solid LightGray;
+        }
+        .table-tabs tr {
+            font-size: 1rem;
+            font-weight: 400;
+            cursor: pointer;
+            border: 1px solid #E0E0E0;
+        }
+        .table-tabs tr td.active {
+            border-bottom: 3px solid #1DA1F2;
+        }
+        .w-30{
+            width: 20%;
+        }
+        .tr-15{
+            /* border-top: 15px solid #fff; */
+            height: 65px;
+        }
+    </style>
     <script>
         $(document).ready(function(){
 
+            $("#btnTumblrPosts").click(function (){
+                document.getElementById('hdnTumblrQueryType').value = "TumblrPosts";
+            });
+
+            $("#btnTumblrTags").click(function (){
+                document.getElementById('hdnTumblrQueryType').value = "TumblrTags";
+            });
+
+
             $("#btnSubmit").click(function(){
                 if(document.getElementById('tumblr-posts').checked){
-            $('#dvTumblrPosts').attr('style', 'display:block;');
-            $('#dvTumblrTag').attr('style', 'display:none;');
+                    $('#dvTumblrPosts').attr('style', 'display:block;');
+                    $('#dvTumblrTag').attr('style', 'display:none;');
 
-        }else if(document.getElementById("tumblr-tag").checked){
-            $('#dvTumblrTag').attr('style', 'display:block;');
-            $('#dvTumblrPosts').attr('style', 'display:none;');
-        }
-        else{
-            document.getElementById("GFG").innerHTML = "Please select atleast one option"
-        }
+                }else if(document.getElementById("tumblr-tag").checked){
+                    $('#dvTumblrTag').attr('style', 'display:block;');
+                    $('#dvTumblrPosts').attr('style', 'display:none;');
+                }
+                else{
+                    document.getElementById("GFG").innerHTML = "Please select atleast one option"
+                }
             });
 
         });
     </script>
 </head>
 <body>
-    <p><h3>Please select any one option: </h3></p>
-    <input type="radio" id="tumblr-posts" name="tumblr" value="tumblr-posts">
-    <label for="tumblr-posts">tumblr-posts</label><br>
-    <input type="radio" id="tumblr-tag" name="tumblr" value="tumblr-tag">
-    <label for="tumblr-tag">tumblr-tag</label><br>
-    <label id = "GFG">
+<div class="bg-white mb-3">
+    <img src="https://cdn3.iconfinder.com/data/icons/social-media-2169/24/social_media_social_media_logo_tumblr-512.png" alt="Tumblr" width="36" height="36">
+    <span class="lead text-muted pl-3" id="query_name" style="font-size: 1.1rem; font-weight: 500;">Tumbler</span>
+</div>
+<div class="col-6">
+<ul class="nav nav-tabs">
+        <li class="nav-item">
+            <a href="#Tumbler_posts" class="nav-link active" data-toggle="tab">Tumbler_Posts </a>
+        </li>
+        <li class="nav-item">
+            <a href="#Tumbler_tags" class="nav-link" data-toggle="tab">Tumbler_Tags</a>
+        </li>
+    </ul>
 
-    </label>
+<form method="POST" action="{% url 'query:make_query_tumblr' %}">
+        {% csrf_token %}
+    <div class="tab-content">
+        <input type="text" value="" id="hdnTumblrQueryType" name="hdnTumblrQueryType" hidden>
+      <div class="tab-pane fade show active" id="Tumbler_posts">
+        <div class="card bg-light" style="border-top: none;">
+                <div class="row mt-4"> <!-- (1) -->
+                    <div class="col-2 offset-1">
+                        <label for="keyword" class="pt-2"> Keyword</label>
+                    </div>
+                    <div class="col-7">
+                        <input type="text" size="40" class="form-control" name="keyword_posts" placeholder="Ex :kingjamesprogramming">
+                    </div>
+                </div>
 
-    <p><button id="btnSubmit">Submit</button></p>
+                <div class="row mt-3"> <!-- (1.a) -->
+                    <div class="offset-3 col-7">
+                        <div class="row">
+                            <div class="col-3 pr-0">
+                                <select class="custom-select" name="mydropdown1">
+                                    <option value="AND"> AND </option>
+                                    <option value="OR"> OR </option>
+                                </select>
+                            </div>
+                            <div class="col-9">
+                                <input type="text" size="35" class="form-control" name="keyword2" placeholder="Ex :Tumblr posts">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3"> <!-- (1.b) -->
+                    <div class="col-2 offset-1 text-right pt-2 pr-0">
+                        <span> <span class="align-middle mr-1" style="font-size: 12px!important;">Add</span> <input class="align-middle" onclick="addRow(); return false;" type="image" src="https://www.flaticon.com/svg/static/icons/svg/25/25340.svg" alt="plus sign here" width="18.33" height="18.33" /></span>
+                    </div>
+                    <div class="col-7">
+                        <div class="row">
+                            <div class="col-3 pr-0">
+                                <select class="custom-select" name="mydropdown2">
+                                    <option value="OR"> OR </option>
+                                    <option value="AND"> AND </option>
+                                </select>
+                            </div>
+                            <div class="col-9">
+                                <input type="text" size="35" class="form-control" name="keyword3" placeholder="Ex :kingjamesprogramming">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table id="empTable">
+                    <div id="cont"></div>
+                </table>
 
 
-    <div id="dvTumblrPosts" class="container content" style="display:none">
-        <div class="jumbotron">
-            <h3>Enter a Search Term for tumblr-posts</h3>
-            <form method="POST" action="{}">
-                <p class="keyword">
-                <label for="Keyword">Keyword:</label>
-                <input type="text" name="keyword1">
-                <label>Please enter a keyword like "kingjamesprogramming"</label>
-                </p>
-                <p class = "count">
-                <label for="count">Count:</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="text" name="count">
-                <label> Please enter a count value like 10 or 20</label>
-                </p>
-                <p>
-                <input type="submit" value="Submit">
-                </p>
-            </form>
+                <div class="row mt-3"> <!-- (2) -->
+                    <div class="col-2 offset-1">
+                        <label for="count" class="pt-2">Count</label>
+                    </div>
+                    <div class="col-7">
+                        <input type="text" size="40" class="form-control" name="count_posts" placeholder="Ex. 10">
+                    </div>
+                </div>
+                <input type="text" value="tumblr" id="txtPlatformType" name="txtPlatformType" hidden>
+                <div class="d-flex justify-content-center mt-5 mb-4">
+                    <button type="submit" id="btnTumblrPosts" class="btn btn-success btn-sm py-2 px-5" style="border-radius: 0; font-weight: bold; letter-spacing: 2px;">COLLECT DATA</button>
+                </div>
         </div>
     </div>
-    <div id="dvTumblrTag" class="container content" style="display:none">
-        <div class="jumbotron">
-            <h3>Enter a Search Term for tumblr-tag</h3>
-            <form method="POST" action="{}">
-                <p class="keyword">
-                <label for="Keyword">Keyword:</label>
-                <input type="text" name="keyword1">
-                <label>Please enter a keyword like "lol"</label>
-                </p>
-                <p class = "count">
-                <label for="count">Count:</label>&nbsp;&nbsp;&nbsp;&nbsp;
-                <input type="text" name="count" >
-                <label> Please enter a count value like 5 or 10</label>
-                </p>
-                <p>
-                <input type="submit" value="Submit">
-                </p>
+    <div class="tab-pane fade" id="Tumbler_tags">
+        <div class="card bg-light" style="border-top: none;">
+                <div class="row mt-4"> <!-- (1) -->
+                    <div class="col-2 offset-1">
+                        <label for="keyword" class="pt-2"> Keyword</label>
+                    </div>
+                    <div class="col-7">
+                        <input type="text" size="40" class="form-control" name="keyword_tags" placeholder="Ex :kingjamesprogramming">
+                    </div>
+                </div>
+
+                <div class="row mt-3"> <!-- (1.a) -->
+                    <div class="offset-3 col-7">
+                        <div class="row">
+                            <div class="col-3 pr-0">
+                                <select class="custom-select" name="mydropdown1">
+                                    <option value="AND"> AND </option>
+                                    <option value="OR"> OR </option>
+                                </select>
+                            </div>
+                            <div class="col-9">
+                                <input type="text" size="35" class="form-control" name="keyword2" placeholder="Ex :kingjamesprogramming">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row mt-3"> <!-- (1.b) -->
+                    <div class="col-2 offset-1 text-right pt-2 pr-0">
+                        <span> <span class="align-middle mr-1" style="font-size: 12px!important;">Add</span> <input class="align-middle" onclick="addRow(); return false;" type="image" src="https://www.flaticon.com/svg/static/icons/svg/25/25340.svg" alt="plus sign here" width="18.33" height="18.33" /></span>
+                    </div>
+                    <div class="col-7">
+                        <div class="row">
+                            <div class="col-3 pr-0">
+                                <select class="custom-select" name="mydropdown2">
+                                    <option value="OR"> OR </option>
+                                    <option value="AND"> AND </option>
+                                </select>
+                            </div>
+                            <div class="col-9">
+                                <input type="text" size="35" class="form-control" name="keyword3" placeholder="Ex :kingjamesprogramming">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <table id="empTable">
+                    <div id="cont"></div>
+                </table>
 
 
-            </form>
+                <div class="row mt-3"> <!-- (2) -->
+                    <div class="col-2 offset-1">
+                        <label for="count" class="pt-2">Count</label>
+                    </div>
+                    <div class="col-7">
+                        <input type="text" size="40" class="form-control" name="count_tags" placeholder="Ex. 10">
+                    </div>
+                </div>
+                <input type="text" value="tumblr" id="txtPlatformType" name="txtPlatformType" hidden>
+                <div class="d-flex justify-content-center mt-5 mb-4">
+                    <button type="submit" id="btnTumblrTags" class="btn btn-success btn-sm py-2 px-5" style="border-radius: 0; font-weight: bold; letter-spacing: 2px;">COLLECT DATA</button>
+                </div>
         </div>
     </div>
+  </div>
+</form>
+</div>
 </body>
 </html>
 
 {% endblock %}
-
-
