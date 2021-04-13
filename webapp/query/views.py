@@ -5,7 +5,7 @@ from django.core.management import call_command
 from django.http import HttpResponse
 from django.urls import reverse
 from query.models import Tweet
-from analysis.models import Study
+from analysis.models import Study, Tumblr_Study
 from accounts.models import Profile
 from subprocess import Popen, PIPE
 from django.contrib.auth.decorators import login_required
@@ -59,75 +59,76 @@ def validate_massmine(request):
 	#return(0)
 
 
+#
+# def validate_massmine_facebook(request):
+#
+# 	my_profile_fbook = instance_fbook=request.user.profile
+# 	app_id = my_profile_fbook.app_id
+# 	app_secret = my_profile_fbook.app_secret
+# 	access_token = my_profile_fbook.access_token
+# 	child1 = pexpect.spawn('massmine --task=facebook-auth')
+# 	child1.expect('[No]')
+# 	child1.sendline('yes')
+# 	child1.expect('app ID')
+# 	child1.sendline(app_id)
+# 	child1.expect('app Secret')
+# 	child1.sendline(app_secret)
+# 	child1.expect('Access token')
+# 	child1.sendline(access_token)
+#
+# 	child1.wait()
+# 	#exit status should be 0 on a success, 1 on a fail. signal status is if something else interrupted the command.
+# 	return(child1.exitstatus)
+# 	#return(0)
 
-def validate_massmine_facebook(request):
+#
+# def validate_massmine_instagram(request):
+#
+# 	my_profile_insta = instance_insta=request.user.profile
+# 	client_id = my_profile_insta.app_id
+# 	client_secret = my_profile_insta.app_secret
+# 	access_token_insta = my_profile_insta.access_token
+# 	child2 = pexpect.spawn('massmine --task=instagram-auth')
+# 	child2.expect('[No]')
+# 	child2.sendline('yes')
+# 	child2.expect('Client Id')
+# 	child2.sendline(client_id)
+# 	child2.expect('Client Secret')
+# 	child2.sendline(client_secret)
+# 	child2.expect('Access token')
+# 	child2.sendline(access_token_insta)
+# 	child2.wait()
+# 	#exit status should be 0 on a success, 1 on a fail. signal status is if something else interrupted the command.
+# 	return(child2.exitstatus)
 
-	my_profile_fbook = instance_fbook=request.user.profile
-	app_id = my_profile_fbook.app_id
-	app_secret = my_profile_fbook.app_secret
-	access_token = my_profile_fbook.access_token
-	child1 = pexpect.spawn('massmine --task=facebook-auth')
-	child1.expect('[No]')
-	child1.sendline('yes')
-	child1.expect('app ID')
-	child1.sendline(app_id)
-	child1.expect('app Secret')
-	child1.sendline(app_secret)
-	child1.expect('Access token')
-	child1.sendline(access_token)
-
-	child1.wait()
-	#exit status should be 0 on a success, 1 on a fail. signal status is if something else interrupted the command.
-	return(child1.exitstatus)
-	#return(0)
-
-
-def validate_massmine_instagram(request):
-
-	my_profile_insta = instance_insta=request.user.profile
-	client_id = my_profile_insta.app_id
-	client_secret = my_profile_insta.app_secret
-	access_token_insta = my_profile_insta.access_token
-	child2 = pexpect.spawn('massmine --task=instagram-auth')
-	child2.expect('[No]')
-	child2.sendline('yes')
-	child2.expect('Client Id')
-	child2.sendline(client_id)
-	child2.expect('Client Secret')
-	child2.sendline(client_secret)
-	child2.expect('Access token')
-	child2.sendline(access_token_insta)
-	child2.wait()
-	#exit status should be 0 on a success, 1 on a fail. signal status is if something else interrupted the command.
-	return(child2.exitstatus)
-
-
-def validate_massmine_youtube(request):
-
-	my_profile_ytube = instance_ytube=request.user.profile
-	client_id = my_profile_ytube.app_id
-	client_secret = my_profile_ytube.app_secret
-	#oauth_client_id = my_profile_ytube.oauth_client_id
-	#oauth_client_secret = my_profile_ytube.oauth_client_secret
-	refresh_token_ytube = my_profile_ytube.access_token
-	child3 = pexpect.spawn('massmine --task=youtube-auth')
-	child3.expect('[No]')
-	child3.sendline('yes')
-	child3.expect('Client Id')
-	child3.sendline(client_id)
-	child3.expect('Client Secret')
-	child3.sendline(client_secret)
-	child3.expect('refresh token')
-	child3.sendline(refresh_token_ytube)
-	child3.wait()
-	#exit status should be 0 on a success, 1 on a fail. signal status is if something else interrupted the command.
-	return(child3.exitstatus)
+#
+# def validate_massmine_youtube(request):
+#
+# 	my_profile_ytube = instance_ytube=request.user.profile
+# 	client_id = my_profile_ytube.app_id
+# 	client_secret = my_profile_ytube.app_secret
+# 	#oauth_client_id = my_profile_ytube.oauth_client_id
+# 	#oauth_client_secret = my_profile_ytube.oauth_client_secret
+# 	refresh_token_ytube = my_profile_ytube.access_token
+# 	child3 = pexpect.spawn('massmine --task=youtube-auth')
+# 	child3.expect('[No]')
+# 	child3.sendline('yes')
+# 	child3.expect('Client Id')
+# 	child3.sendline(client_id)
+# 	child3.expect('Client Secret')
+# 	child3.sendline(client_secret)
+# 	child3.expect('refresh token')
+# 	child3.sendline(refresh_token_ytube)
+# 	child3.wait()
+# 	#exit status should be 0 on a success, 1 on a fail. signal status is if something else interrupted the command.
+# 	return(child3.exitstatus)
 
 
 
 def validate_massmine_tumblr(request):
-
-	my_profile_tumblr = instance_tumblr=request.user.profile
+	my_profile_tumblr = Profile.objects.filter(user_id=request.user.id,
+										social_platform=request.POST.get('txtPlatformType')).first()
+	#my_profile_tumblr = instance_tumblr = request.user.profile
 	consumer_key = my_profile_tumblr.consumer_key
 	consumer_secret = my_profile_tumblr.consumer_secret
 	access_token = my_profile_tumblr.access_token
@@ -141,9 +142,9 @@ def validate_massmine_tumblr(request):
 	child4.sendline(consumer_key)
 	child4.expect('Consumer secret:')
 	child4.sendline(consumer_secret)
-	child4.expect('Access token')
+	child4.expect('Token')
 	child4.sendline(access_token)
-	child4.expect('Access token secret')
+	child4.expect('Token secret')
 	child4.sendline(access_token_secret)
 	child4.wait()
 	#exit status should be 0 on a success, 1 on a fail. signal status is if something else interrupted the command.
@@ -211,6 +212,7 @@ def make_query(request):
 				command = command + '"' + customDDValue + '"' + customInputValue
 
 		#command = "/usr/local/bin/massmine/./massmine --task=twitter-stream --count=300 --geo=-74,40,-73,41"
+		#command =  "/usr/local/bin/massmine/./massmine --task=tumblr-posts --query=kingjamesprogramming --count=10"
 		stdout = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout
 
 		output = stdout.readlines()
@@ -319,3 +321,96 @@ def make_query(request):
 		return render(request, 'query/query_complete.html', {})
 
 #lang=language#lang=language
+
+
+def make_query_tumblr(request):
+	keyword = None
+	count = None
+	command = None
+	if (validate_massmine_tumblr(request) == 1):
+		return render(request, 'query/query_error.html', {})
+	else :
+		#print("Hello Tumblr")
+		queryType = request.POST.get('hdnTumblrQueryType')
+
+		if queryType == "TumblrTags":
+			keyword = request.POST.get('keyword_tags')
+			count = request.POST.get('count_tags')
+			command = '/usr/local/bin/massmine/./massmine --task=tumblr-tag --query=' + keyword + ' --count=' + '"' + count + '"'
+		else:
+			keyword = request.POST.get('keyword_posts')
+			count = request.POST.get('count_posts')
+			command = '/usr/local/bin/massmine/./massmine --task=tumblr-posts --query=' + keyword + ' --count=' + '"' + count + '"'
+
+		#command =  '/usr/local/bin/massmine/./massmine --task=tumblr-posts --query=' + keyword + ' --count=' + '"' + count + '"'
+		stdout = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout
+
+		output = stdout.readlines()
+
+		new_study = Tumblr_Study(user=str(request.user),tumblr_study_id=keyword+str(int(time.time())), count=count)
+		new_study.save()
+
+		for i in output:
+			string = i.decode("utf-8")
+			if(string == '\n'):
+				continue
+			data = json.loads(string)
+			try:
+				for key,value in data.items():
+					if (key == 'type'):
+						type = value
+					if (key == 'id_string'):
+						tpid = value
+					if (key == 'blog_name'):
+						b_name = value
+					if (key == 'blog'):
+						for key,value in data['blog'].items():
+							if (key == 'name'):
+								name = value
+							if (key == 'title'):
+								title = value
+							if (key == 'description'):
+								desc = value
+							if (key == 'url'):
+								url = value
+							if (key == 'uuid'):
+								uuid = value
+							if (key =='updated'):
+								updated = value
+					if (key == 'post_url'):
+						p_url = value
+					if (key == 'date'):
+						date = value
+					if (key == 'timestamp'):
+						t_stamp = value
+					if (key == 'state'):
+						state = value
+					if (key == 'format'):
+						format = value
+					if (key == 'reblog'):
+						for key,value in data['reblog'].items():
+							if (key == 'comment'):
+								comment = value
+					if (key == 'can_reblog'):
+						can_reblog = value
+					if (key == 'can_reply'):
+						can_reply = value
+
+				new_study.posts.create(tumblr_id_str = tpid ,tumblr_type_str = type, blogname_str= b_name, blog_name_str = name, blog_title_str= title, blog_description_str= desc,
+											  blog_url_str=url,
+											  blog_uuid_str= uuid,
+											  updated_at= updated,
+											  post_url_str= p_url,
+											  date = date,
+											  timestamp= t_stamp,
+											  state= state,
+											  format= format,
+											  comment= comment,
+											  can_reblog= can_reblog,
+											  can_reply= can_reply )
+
+			except Exception as e:
+				print(e)
+		return render(request, 'query/query_complete.html', {})
+
+
