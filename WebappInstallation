@@ -1,0 +1,80 @@
+#patanzer
+#How to install Massmine-for-the-Masses
+
+GET YOURSELF A VM
+	1. Install an Ubuntu VM - 18.04 tested. 
+
+BASIC TOOLS TO INSTALL THE REST OF IT
+	2. Install git: sudo apt-get install -y git
+	3. Install pip: sudo apt install -y python3-pip
+	
+REPOSITORY CODE INSTALLATION
+	4. Get back out and clone the repository: cd && git clone https://github.com/gowthamichinta/Massmine_new.git
+	5. Get into cloned directory: cd Massmine-for-the-Masses
+	6. (Developers only) Checkout the right branch (for example, I do: git checkout patanzer)
+	7. (Developers only) Get back out to your home directory: cd  
+	8. Copy webappproject folder into your virtual environment:
+	You want to get the 'webapp' folder from Massmine-for-the-Masses/src and put it into the django directory you just created. 
+	You can use a file manager, or else do the following command: cp -a Massmine-for-the-Masses/src/. django/
+
+INSTALING MASSMINE
+	For your convenience, Massmine 1.1.0 is included in the webapp folder so you don't have to go download it. The website for it is here: https://www.massmine.org/
+	9. Unzip the Massmine zip file: unzip django/webapp/massmine-1.1.0-linux-x86_64.zip -d django/
+	10. Make massmine executable (may ask for your password): cd django/massmine && sudo ln -s `pwd`/massmine /usr/local/bin
+  
+ SETTING UP YOUR VIRTUAL ENVIRONMENT
+	11. Install virtualenv: pip install shell
+
+ WHAT TO INSTALL IN YOUR ENVIRONMENT : 
+  11.pip install django-encrypted-model-fields
+ 12.pip install django-tables2
+ 13.pip install django-import-export
+ 14.pip install django-utils-six
+ 15.pip install python-dateutil
+ 16.pip install pyenchant
+ 17.pip install matplotlib
+ 18.pip install pandas
+ 19.pip install pyreadstat
+ 20.pip install dicttoxml
+ 21.pip install xhtml2pdf
+ 22.pip install plotly
+ 23.pip install textblob
+ 24.pip install geopy
+ 25.pip install pexpect
+ 26.pip install easy-date
+	
+
+MAKING YOUR ENCRYPTION KEYFIXING TIMEZONE ERROR AND OTHER ENVIRONMENT ISSUES
+	27. (Ignore for development) Generate a new key:  MYVAR=$( python django/webapp/manage.py generate_encryption_key)
+	28. (Ignore for development)Update settings.py to use the new key: sed -i '/FIELD_ENCRYPTION_KEY/d' django/webapp/webappproject/settings.py && echo "FIELD_ENCRYPTION_KEY = '$MYVAR'"  >> django/webapp/webappproject/settings.py
+
+
+CREATING DATABASE
+	29. python django/webapp/manage.py makemigrations
+	30. python django/webapp/manage.py migrate --run-syncdb
+	31. To create your first admin, do: python django/webapp/manage.py createsuperuser and walk through the options to create one
+
+STARTING THE SERVER
+	32. Run your server!: python django/webapp/manage.py runserver
+
+You're done! If you close this environment, you can get back into it by cd'ing into the django folder and running: pipenv shell
+
+If you want to have forgot password send to actual emails, you will need to either set up a smtp server or use a third party service and change details in the webapp/webappprojct/settings.py file. Currently, emails are 'sent' to a folder within the project.
+
+
+Troubleshooting migrations:
+
+	If you are getting the error 'no module named X' when attempting to migrate or run the project, try installing the module listed. Keep in mind that names may not be exact - for example, if you have installed 'enchant' but not 'pyenchant', you will get the error 'no module named enchant'. Refer to the instructions above for instructions on installing modules that may have been missed.
+
+	If you are still having errrs when migrating or running your server, try deleting the contents of all migrations and __pycache__ folders, then start from the step to makemigrations again. Don't forget to do 'migrate --run-syncdb'!
+
+	If there are still issues migrating, you can try deleting the migrations and pycache folders, and also delete the database. THIS WILL DELETE ANY DATA YOU HAVE STORED BEYOND THE ABILITY TO RECOVER, SO BE WARNED!
+
+
+Troubleshooting running your server:
+	
+	If you can't see the webpage: This project runs by default at 127.0.01:8000. Check your firewall and make sure that port 8000 and the loopback address are not blocked.
+
+	If you still can't see the webpage: Did you do the 'runserver' command? 
+	
+	If RabbitMQ isn't working: Do you have port 5672 open? It is the main port for the RabbitMQ server.
