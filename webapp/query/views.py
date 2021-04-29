@@ -336,12 +336,21 @@ def make_query_tumblr(request):
 		if queryType == "TumblrTags":
 			keyword = request.POST.get('keyword_tags')
 			count = request.POST.get('count_tags')
-			command = '/usr/local/bin/massmine/./massmine --task=tumblr-tag --query=' + keyword + ' --count=' + '"' + count + '"'
+			command = '/usr/local/bin/massmine/./massmine --task=tumblr-tag --count=' + count + ' --query=' + '"' + keyword
 		else:
 			keyword = request.POST.get('keyword_posts')
 			count = request.POST.get('count_posts')
-			command = '/usr/local/bin/massmine/./massmine --task=tumblr-posts --query=' + keyword + ' --count=' + '"' + count + '"'
+			command = '/usr/local/bin/massmine/./massmine --task=tumblr-posts --count=' + count + ' --query=' + '"' + keyword
 
+		for key, value in request.POST.items():
+			if key.startswith('customElementInput'):
+				customId = key.split('customElementInput',1)[1]
+				#customDDValue = request.POST.get('customElementDD' + customId)
+				customInputValue = request.POST.get('customElementInput' + customId)
+				#print(customDDValue + ":   " + customInputValue)
+				command = command + ',' + customInputValue
+
+		command = command + '"'
 		#command =  '/usr/local/bin/massmine/./massmine --task=tumblr-posts --query=' + keyword + ' --count=' + '"' + count + '"'
 		stdout = subprocess.Popen(command, shell=True, stdout=subprocess.PIPE).stdout
 
@@ -349,6 +358,9 @@ def make_query_tumblr(request):
 
 		new_study = Tumblr_Study(user=str(request.user),tumblr_study_id=keyword+str(int(time.time())), count=count)
 		new_study.save()
+
+		now_Time = datetime.now()
+		currentTime = now_Time.strftime("%H%M%S")
 
 		for i in output:
 			string = i.decode("utf-8")
@@ -360,7 +372,7 @@ def make_query_tumblr(request):
 					if (key == 'type'):
 						type = value
 					if (key == 'id_string'):
-						tpid = value
+						tpid = value + currentTime
 					if (key == 'blog_name'):
 						b_name = value
 					if (key == 'blog'):
@@ -411,6 +423,6 @@ def make_query_tumblr(request):
 
 			except Exception as e:
 				print(e)
-		return render(request, 'query/query_complete.html', {})
+		return render(request, 'query/query_complete_tumblr.html', {})
 
 
