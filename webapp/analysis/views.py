@@ -97,7 +97,8 @@ class FreqWordsAnalysis(TemplateView):
 			for word in text.lower().split():
 				word = re.sub(r'[^\w\s]','',word)
 				word = re.sub(r'\.+$','',word)
-				if word == '' or isNumber.search(word) == True or d.check(word) == False or word in addStop or word in alsoAddStop or len(word) == 1:
+				#if word == '' or isNumber.search(word) == True or d.check(word) == False or word in addStop or word in alsoAddStop or len(word) == 1:
+				if word == '' or isNumber.search(word) == True or word in addStop or word in alsoAddStop or len(word) == 1:
 					word = ''
 				if word not in stopList and word!='':
 					textwords.append(word)
@@ -603,7 +604,7 @@ def view_tumblr_posts(request):
 
 @login_required
 def exports(request):
-	print('LOG: Reache here: Tab is exports().')
+	print('LOG: Reached here: Tab is exports().')
 	study_select = ''
 	try:
 		study_select =  request.session['study_select']
