@@ -1,24 +1,1 @@
-[[source]]
-name = "pypi"
-url = "https://pypi.org/simple"
-verify_ssl = true
-
-[dev-packages]
-
-[packages]
-numpy = "*"
-matplotlib = "*"
-plotly = "*"
-cufflinks = "*"
-pandas = "*"
-celery = "*"
-django-celery-results = "*"
-django-encrypted-model-fields = "*"
-pexpect = "*"
-django-tables2 = "*"
-pyenchant = "*"
-textblob = "*"
-django = "==2.1.7"
-
-[requires]
-python_version = "3.8"
+[[source]]name = "pypi"url = "https://pypi.org/simple"verify_ssl = true[dev-packages][packages]django = "==2.2"numpy = "*"matplotlib = "*"plotly = "*"cufflinks = "*"pandas = "*"celery = "*"django-celery-results = "*"django-encrypted-model-fields = "*"pexpect = "*"django-tables2 = "*"pyenchant = "*"textblob = "*"django-import-export = "*"pyreadstat = "*"dicttoxml = "*"xhtml2pdf = "*"geopy = "*"easy-date = "*"[requires]python_version = "3.8"
