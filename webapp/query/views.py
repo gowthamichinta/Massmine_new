@@ -53,6 +53,12 @@ def validate_massmine(request):
 	child.sendline(access_token)
 	child.expect('Access token secret')
 	child.sendline(access_token_secret)
+
+	child.expect("Will you access Twitter's premium.*")
+	child.sendline('no')
+	child.expect ("Will you access Twitter's premium.*")
+	child.sendline('no')
+	child.wait()
 	#child.wait()
 	#exit status should be 0 on a success, 1 on a fail. signal status is if something else interrupted the command.
 	return(child.exitstatus)
@@ -162,7 +168,7 @@ def platforms1(request):
 @login_required
 def make_query(request):
 
-	if (validate_massmine(request) == 1):
+	if (validate_massmine(request) != 0):
 		return render(request, 'query/query_error.html', {})
 
 	else:
