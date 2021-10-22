@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseRedirect, HttpResponse
 from django.db import transaction
 
-from accounts.models import Profile, SocialPlatformProfile
+from accounts.models import Profile
 
 
 def index(request):
