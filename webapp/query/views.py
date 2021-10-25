@@ -172,6 +172,15 @@ def make_query(request):
 		return render(request, 'query/query_error.html', {})
 
 	else:
+		# function for calling geocode() multiple times, in case it fails initially
+		def do_geocode(address, attempt=1, max_attempts=5):
+			try:
+				return geopy.geocode(address, timeout=10)
+			except:
+				if attempt <= max_attempts:
+					return do_geocode(address, attempt=attempt+1)
+				raise
+
 		keyword = request.POST.get('keyword')
 		mydropdown1=request.POST.get('mydropdown1')
 		keyword2 = request.POST.get('keyword2')
@@ -179,8 +188,8 @@ def make_query(request):
 		keyword3 = request.POST.get('keyword3')
 		count = request.POST.get('count')
 		location = request.POST.get('location')
-		geolocator = Nominatim(user_agent='my_user_agent')
-		Location = geolocator.geocode(location)
+		geopy = Nominatim(user_agent='massmine/1.0')
+		Location = do_geocode(location)
 		p2=Location.latitude
 		p1=Location.longitude
 		p3 = str(p1)+","+str(p2)+","+str(p1+1)+","+str(p2+1)
