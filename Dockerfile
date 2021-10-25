@@ -17,12 +17,10 @@ RUN pipenv install --skip-lock --system --dev
 # makes massmine executable
 RUN ln -s `pwd`/massmine /usr/local/bin
 
-# delete database ...
+# create file for database
+RUN touch webapp/db.sqlite3
 
-# do migrations ......
-
-# run server
-CMD ["python3", "webapp/manage.py", "runserver", "0.0.0.0:8000"]
-
+# execute startup script
+CMD ["bash", "startup.sh"]
 
 
