@@ -130,7 +130,7 @@ LANGUAGE_CODE = 'en-us'
 
 TIME = 'UTC'
 
-TIME_ZONE = ''
+TIME_ZONE = 'America/New_York'
 
 USE_I18N = True
 
