@@ -4,6 +4,7 @@ RUN mkdir /app
 WORKDIR /app
 ADD . /app/
 
+
 # install python, pip, enchant, pipenv
 RUN apt-get update && apt-get install -y --no-install-recommends \
         python3-pip \
