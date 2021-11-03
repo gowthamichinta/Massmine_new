@@ -16,7 +16,7 @@ RUN pip3 install pipenv
 RUN pipenv install --skip-lock --system --dev
 
 # makes massmine executable
-RUN ln -s `pwd`/massmine /usr/local/bin
+#RUN ln -s `pwd`/massmine /usr/local/bin
 
 # create file for database
 RUN touch webapp/db.sqlite3
