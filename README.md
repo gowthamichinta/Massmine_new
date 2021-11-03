@@ -12,7 +12,8 @@ Massmine-For-The-Masses is an open-source, proof of concept tool. It extends the
 6) In the terminal window paste the following command, and then press enter:   
 `docker run -d -p 8000:8000 -w/app --mount type=bind,source="$(pwd)"/db.sqlite3,target=/app/webapp/db.sqlite3 andykawabata/massmine`
 7) Allow 1-2 minutes for container to start, then open you web browser and type `localhost:8000` into your search bar. This could take longer depending on your internet speed.
-8) To stop the webapp, go to the Docker Desktop app, Click "Containers/Apps" in the sidebar. Hover over the row with your running container and click the Stop icon near the right.
+
+    To stop the webapp, go to the Docker Desktop app, Click "Containers/Apps" in the sidebar. Hover over the row with your running container and click the Stop icon near the right.
 
 ### MacOS - Running after inital installation:
 1) Open Docker Desktop app
