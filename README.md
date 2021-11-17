@@ -16,8 +16,8 @@ https://drive.google.com/drive/folders/1ngUce_muJ2QPnB72f0Z0HKFTm45cSBFS
 
 6) Allow 1-2 minutes for container to start, then open you web browser and type `localhost:8000` into your search bar. This could take longer depending on your internet speed.
 
-    ### To Stop or Restart the App:
-    Go to the Docker Desktop app, Click "Containers/Apps" in the sidebar. Hover over the row with your running container and either click the "Play" or "Stop" icon near the right
+    #### To Stop or Restart the App:
+    Open the Docker Desktop app, Click "Containers/Apps" in the sidebar. Hover over the row with your running container and either click the "Play" or "Stop" icon near the right
 
 <br>
 <br>
