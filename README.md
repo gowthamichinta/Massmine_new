@@ -17,8 +17,9 @@ https://drive.google.com/drive/folders/1ngUce_muJ2QPnB72f0Z0HKFTm45cSBFS
 
     #### To Stop or Restart the App:
     Open the Docker Desktop app, Click "Containers/Apps" in the sidebar. Hover over the row with your running container and either click the "Play" or "Stop" icon near the right
+    
 <br>
-<br>
+
 ### Windows 10 and 11:
 1) Install Docker Desktop by following the instructions at this link. Make sure your system meets the requirements. You will need to create an account. https://docs.docker.com/desktop/windows/install/ 
     - if having trouble, refer to this YouTube tutorial: https://www.youtube.com/watch?v=_9AWYlt86B8
@@ -35,7 +36,6 @@ https://drive.google.com/drive/folders/1ngUce_muJ2QPnB72f0Z0HKFTm45cSBFS
     #### To Stop or Restart the App:
     Open the Docker Desktop app, Click "Containers/Apps" in the sidebar. Hover over the row with your running container and either click the "Play" or "Stop" icon near the right
 
-<br>
 <br>
 
 ### Linux
