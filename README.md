@@ -60,12 +60,12 @@ https://drive.google.com/drive/folders/1ngUce_muJ2QPnB72f0Z0HKFTm45cSBFS
     
 <br>
 <br>
-<br>
 
 ## Developer Guidelines (for helping maintain Docker image)
 - If you add a new python dependency, be sure it is entered into the Pipfile
 - If you add a system-wide dependency, be sure to notify the person who maintains the docker image, so they can add it to the Dockerfile
-
+<br>
+<br>
 ## Instructions for Maintaining Docker Image
 ### Initial Steps
 - Create a Dockerhub account if you do not already have one
@@ -82,7 +82,9 @@ if you are using an M1 Mac, instead run `docker buildx build --platform linux/am
 ### Push to Dockerhub
 - Make sure you are added as a collaborator on Dockerhub for the repo andykawabata/massmine
 - run `docker push andykawabata/massmine` to push the new image to Dockerhub
-
+<br>
+<br>
+<br>
 
 ### Team Members
 #### 1. Sadhana Thummalapenta
