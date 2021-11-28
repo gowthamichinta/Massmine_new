@@ -64,24 +64,26 @@ https://drive.google.com/drive/folders/1ngUce_muJ2QPnB72f0Z0HKFTm45cSBFS
 ## Developer Guidelines (for helping maintain Docker image)
 - If you add a new python dependency, be sure it is entered into the Pipfile
 - If you add a system-wide dependency, be sure to notify the person who maintains the docker image, so they can add it to the Dockerfile
+
 <br>
 <br>
+
 ## Instructions for Maintaining Docker Image
 ### Initial Steps
 - Create a Dockerhub account if you do not already have one
 - Contact Andy Kawabata (andykawabata@gmail.com) so you can be added as a collaborator on Dockerhub
+- Download the folder with the docker-compose file and unzip it. Be sure to click "Download All" to download the whole folder. https://drive.google.com/drive/folders/1ngUce_muJ2QPnB72f0Z0HKFTm45cSBFS
 ### Building the Image
 - Pull latest commit from this GitHub repository
 - To build the image, run  `docker build -t andykawabata/massmine .`  
 if you are using an M1 Mac, instead run `docker buildx build --platform linux/amd64 -t amdbuild .`
-### Get the docker-compose file
-- Download the folder with the docker-compose file and unzip it. Be sure to click "Download All" to download the whole folder. https://drive.google.com/drive/folders/1ngUce_muJ2QPnB72f0Z0HKFTm45cSBFS
 ### Test the image by running the docker-compose file
 - Open a new terminal window and navigate to inside the folder containing the docker-compose.yml file.
 - Run `docker-compose up` to run the container in interactive mode
-### Push to Dockerhub
+### Push image to Dockerhub
 - Make sure you are added as a collaborator on Dockerhub for the repo andykawabata/massmine
 - run `docker push andykawabata/massmine` to push the new image to Dockerhub
+
 <br>
 <br>
 <br>
