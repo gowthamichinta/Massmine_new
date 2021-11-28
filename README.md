@@ -53,8 +53,8 @@ https://drive.google.com/drive/folders/1ngUce_muJ2QPnB72f0Z0HKFTm45cSBFS
 5) Allow 1-2 minutes for container to start, then open you web browser and type `localhost:8000` into your search bar. This could take longer depending on your internet speed.
 
     #### To Stop or Restart the App:
-    to stop the container run `docker kill $(docker ps -a -q)`  
-    to start it again run `docker start $(docker ps -a -q)`
+    to stop the container run `docker kill massmine-docker`  
+    to start it again run `docker start massmine-docker`
 
 
     
