@@ -4,9 +4,9 @@ Massmine-For-The-Masses is an open-source, proof of concept tool. It extends the
 <br>
 ## Run with Docker
 ### MacOS:
-1) Install Docker Desktop by following the instructions at https://docs.docker.com/desktop/mac/install/ (you will need to create an account)
+1) Install Docker Desktop by following the instructions at https://docs.docker.com/desktop/mac/install/
 2) Once the Docker Desktop app is running, click "Skip Tutorial" to navigate to main dashboard (if applicable)
-3) Go to the following url and click DOWNLOAD ALL in the upper right hand corner. Save the zip file to your desktop and unzip it.
+3) Go to this google drive link and download the whole massmine-docker folder. You can do this by clicking on the massmine-docker dropdown and selecting download. Save the zip file to your desktop and unzip it.
 https://drive.google.com/drive/folders/1ngUce_muJ2QPnB72f0Z0HKFTm45cSBFS
 
 4) Go to your desktop. Right click on the icon of the folder you just downloaded and select: `New Terminal at Folder`
@@ -21,10 +21,10 @@ https://drive.google.com/drive/folders/1ngUce_muJ2QPnB72f0Z0HKFTm45cSBFS
 <br>
 
 ### Windows 10 and 11:
-1) Install Docker Desktop by following the instructions at this link. Make sure your system meets the requirements. You will need to create an account. https://docs.docker.com/desktop/windows/install/ 
+1) Install Docker Desktop by following the instructions at this link. Make sure your system meets the requirements. https://docs.docker.com/desktop/windows/install/ 
     - if having trouble, refer to this YouTube tutorial: https://www.youtube.com/watch?v=_9AWYlt86B8
 2) Once the Docker Desktop app is running, navigate to main dashboard
-3) Go to the following url and click DOWNLOAD ALL in the upper right hand corner. Save the zip file to your desktop and unzip it.
+3) Go to this google drive link and download the whole massmine-docker folder. You can do this by clicking on the massmine-docker dropdown and selecting download. Save the zip file to your desktop and unzip it.
 https://drive.google.com/drive/folders/1ngUce_muJ2QPnB72f0Z0HKFTm45cSBFS
 4) Go to your desktop. While holding down Shift, Right click on the icon of the folder you just downloaded and select: `Open command window here`
 5) In the Command window paste the following command, and then press enter: `docker compose up -d`
@@ -42,7 +42,7 @@ https://drive.google.com/drive/folders/1ngUce_muJ2QPnB72f0Z0HKFTm45cSBFS
 
 1) Install Docker Engine for your distribution by following these instructions https://docs.docker.com/engine/install/#server
 
-2) Go to the following url and click DOWNLOAD ALL in the upper right hand corner. Save the zip and unzip it.
+2) Go to this google drive link and download the whole massmine-docker folder. You can do this by clicking on the massmine-docker dropdown and selecting download. Save the zip and unzip it.
 https://drive.google.com/drive/folders/1ngUce_muJ2QPnB72f0Z0HKFTm45cSBFS
 
 3) Open a terminal window and navigate to within the folder you just downloaded.
@@ -71,8 +71,8 @@ https://drive.google.com/drive/folders/1ngUce_muJ2QPnB72f0Z0HKFTm45cSBFS
 ## Instructions for Maintaining Docker Image
 #### Initial Steps
 - Create a Dockerhub account if you do not already have one
-- Contact Andy Kawabata (andykawabata@gmail.com) so you can be added as a collaborator on Dockerhub
-- Download the folder with the docker-compose file and unzip it. Be sure to click "Download All" to download the whole folder. https://drive.google.com/drive/folders/1ngUce_muJ2QPnB72f0Z0HKFTm45cSBFS
+- Contact Andy (andykawabata@gmail.com) so you can be added as a collaborator on Dockerhub
+- Download the folder with the docker-compose file and unzip it. Be sure to click to download the whole folder. https://drive.google.com/drive/folders/1ngUce_muJ2QPnB72f0Z0HKFTm45cSBFS
 #### Building the Image
 - Pull latest commit from this GitHub repository
 - To build the image, run  `docker build -t andykawabata/massmine .`  
