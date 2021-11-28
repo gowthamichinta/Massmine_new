@@ -76,7 +76,7 @@ https://drive.google.com/drive/folders/1ngUce_muJ2QPnB72f0Z0HKFTm45cSBFS
 ### Building the Image
 - Pull latest commit from this GitHub repository
 - To build the image, run  `docker build -t andykawabata/massmine .`  
-if you are using an M1 Mac, instead run `docker buildx build --platform linux/amd64 -t amdbuild .`
+if you are using an M1 Mac, instead run `docker buildx build --platform linux/amd64 -t andykawabata/massmine .`
 ### Test the image by running the docker-compose file
 - Open a new terminal window and navigate to inside the folder containing the docker-compose.yml file.
 - Run `docker-compose up` to run the container in interactive mode
